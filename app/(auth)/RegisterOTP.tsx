@@ -21,7 +21,7 @@ const RegisterOTP = () => {
   const [emailKey, setEmailKey] = useState(0);
 
   const submit = async () => {
-    router.push("/(protected)/(drawer)/(tabs)/home")
+    router.push("/(protected)/(drawer)/(tabs)/Home")
 
   }
 

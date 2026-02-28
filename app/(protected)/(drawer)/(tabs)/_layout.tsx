@@ -1,123 +1,89 @@
-import { FontAwesome, Fontisto, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { Tabs } from 'expo-router';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useThemeStore } from "@/store/ThemeStore";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const TabsLayout = () => {
+export default function TabLayout() {
 
-  const navigation = useNavigation();
-
-   const {top, bottom} = useSafeAreaInsets()
-
-   const bottomHeight = Platform.OS === 'ios' ? bottom : bottom + 10
-
-   const marginX = Platform.OS === 'ios' ? 10 : 12
-
-   const openDrawer = () => {
-      navigation.dispatch(DrawerActions.toggleDrawer());
-    };
+  const insets = useSafeAreaInsets();
+  const { theme } = useThemeStore()
 
   return (
-    <>
-        <Tabs
-          screenOptions={({ route }) => ({
-            tabBarShowLabel: true,
-            tabBarActiveTintColor: '#218225',
-            tabBarInactiveTintColor: '#21822566',
-            tabBarLabelStyle: {
-              fontFamily: 'Raleway-Bold',
-              fontSize: 11
-            },
+    <Tabs
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          if (route.name === "Home") {
+            return (
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={size}
+                color={color}
+              />
+            );
+          }
 
-            tabBarIcon: ({ focused, color, size }) => {
-              if (route.name === "Home") {
-                return (
-                  <Ionicons
-                    name={focused ? "home" : "home-outline"}
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
+          if (route.name === "MarketPlace") {
+            return (
+              <Ionicons
+                name={focused ? "cart-sharp" : "cart-outline"}
+                size={size}
+                color={color}
+              />
+            );
+          }
 
-              if (route.name === "CreateAgent") {
-                return (
-                  <MaterialIcons
-                    name="support-agent"
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
+          if (route.name === "People") {
+            return (
+              <Ionicons
+                name={focused ? "people-sharp" : "people-outline"}
+                size={size}
+                color={color} />
+            );
+          }
 
-              if (route.name === "MyAgent") {
-                return (
-                  <Fontisto
-                    name={focused ? "world" : "world-o"}
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
+          if (route.name === "Find") {
+            return (
+              <MaterialCommunityIcons 
+                name={focused ? "tag-search" : "tag-search-outline"}
+                size={size}
+                color={color} />
+            );
+          }
 
-              if (route.name === "History") {
-                return (
-                  <MaterialCommunityIcons
-                    name="history"
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
+          if (route.name === "More") {
+            return (
+              <Ionicons
+                name={focused ? "grid" : "grid-outline"}
+                size={size}
+                color={color}
+              />
+            );
+          }
 
-              if (route.name === "Profile") {
-                return (
-                  <FontAwesome
-                    name={focused ? "user" : "user-o"}
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
-
-              return <Ionicons name="ellipse-outline" size={size} color={color} />;
-            },
-
-            tabBarStyle: {
-              backgroundColor: '#ffffff',
-              height: 70,
-              paddingBottom: 8,
-              paddingTop: 8,
-              position: 'absolute',
-              bottom: bottomHeight,
-              borderWidth: 1,
-              borderColor: '#DDDDDD',
-              marginHorizontal: marginX,
-              borderRadius: 6,
-              elevation: 5,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.06,
-              shadowRadius: 6
-            }
-          })}
-        >
-          <Tabs.Screen name="Home" options={{ title: "Home" }} />
-          <Tabs.Screen name="CreateAgent" options={{ title: "Create Agent" }} />
-          <Tabs.Screen name="MyAgent" options={{ title: "My Agent" }} />
-          <Tabs.Screen name="History" options={{ title: "History" }} />
-          <Tabs.Screen name="Profile" options={{ title: "Profile" }} 
-            listeners={() => ({
-              tabPress: (e) => {
-                e.preventDefault()
-                openDrawer()
-              }
-            })}
-          />
-        </Tabs>
-    </>
-  )
+          return <Ionicons name="ellipse-outline" size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#008751",
+        tabBarInactiveTintColor: "gray",
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          backgroundColor: "#fff",
+          borderTopColor: "#DDDDDD",
+          borderTopWidth: 1,
+          paddingTop: 8,
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom,
+          position: "relative",
+          elevation: 0,
+        },
+      })}
+    >
+      <Tabs.Screen name="Home" options={{ title: "Home" }} />
+      <Tabs.Screen name="MarketPlace" options={{ title: "MarketPlace" }} />
+      <Tabs.Screen name="People" options={{ title: "People" }} />
+      <Tabs.Screen name="Find" options={{ title: "Find" }} />
+      <Tabs.Screen name="More" options={{ title: "More" }} />
+    </Tabs>
+  );
 }
-
-export default TabsLayout
