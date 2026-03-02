@@ -1,4 +1,7 @@
-import VendorList from '@/components/VendorList'
+import EventHorizontalList from '@/components/EventHorizontalList'
+import Explore from '@/components/Explore'
+import Media from '@/components/Media'
+import Suggestions from '@/components/Suggestions'
 import { images } from '@/constants'
 import { getGreetingMessage } from '@/utils/getGreetingMessage'
 import { Octicons } from '@expo/vector-icons'
@@ -6,22 +9,15 @@ import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { memo } from 'react'
-import { FlatList, Image, Pressable, ScrollView, Text, useWindowDimensions, View } from 'react-native'
+import { FlatList, Image, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Carousel from "react-native-reanimated-carousel"
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const sliderImages = [
-   images.card1,
+  images.card1,
   images.card2,
   images.card1,
   images.card3
-];
-
-const featuredGames = [
-	images.featured1,
-	images.featured2,
-	images.featured3,
-	images.featured4,
 ];
 
 const CarouselComponent = memo(({ width }: { width: number }) => {
@@ -29,7 +25,7 @@ const CarouselComponent = memo(({ width }: { width: number }) => {
     <Carousel
       autoPlayInterval={5000}
       data={sliderImages}
-      height={140}
+      height={120}
       autoPlay
       loop
       pagingEnabled
@@ -47,7 +43,7 @@ const CarouselComponent = memo(({ width }: { width: number }) => {
             width: "100%",
             height: "100%",
             alignSelf: 'center',
-            borderRadius: 14,
+            borderRadius: 8,
             overflow: 'hidden',
             backgroundColor: "#1F1F1F"
           }}
@@ -96,51 +92,28 @@ const HomeScreen = () => {
                 </View>
             </Pressable>
 
-            <Pressable className='relative' onPress={() => router.push("/(protected)/(drawer)/(routes)/Notifications")}>
+            <Pressable className='relative' onPress={() => router.push("/(protected)/(nodrawer)/Notifications")}>
                 <View className="absolute -top-2 -right-1 bg-red-600 rounded-full min-w-[18px] min-h-[18px] items-center justify-center px-[4px] z-50">
                   <Text className="text-white text-xs font-mmedium" numberOfLines={1} adjustsFontSizeToFit>5</Text>
                 </View>
                 <Octicons name="bell-fill" size={24} color="#218225" />
             </Pressable>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} className='flex-1 flex-grow'>
+        <FlatList
+          data={[]}
+          renderItem={null}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 50 }}
+          ListHeaderComponent={() => (
             <View className='flex-1'>
-                <CarouselComponent width={fullWidth}/>
-                <VendorList />
-                <View>
-                    <View className='w-full px-4 flex-row items-center justify-between mt-2 mb-1'>
-                        <Text className='text-sm font-mbold'>Featured Games</Text>
-                    </View>
-                    <FlatList
-                        nestedScrollEnabled={true}
-                        horizontal
-                        scrollEnabled={true}
-                        data={featuredGames}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: 16 }}
-                        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({item}) => (
-                            <Pressable style={{
-                                width: itemWidth,
-                                height: 95,
-                                alignSelf: 'center',
-                                borderRadius: 12,
-                                overflow: 'hidden',
-                                backgroundColor: "#1F1F1F",
-                                marginBottom: 2,
-
-                            }} 
-                            // onPress={() => router.push("/(protected)/(routes)/TicketDetails")}
-                            >
-                                <Image source={item} style={{ width: '100%', height: '100%', resizeMode: 'cover', borderRadius: 12}}
-                                />
-                            </Pressable>
-                        )}
-                    />
-                </View>
+              <CarouselComponent width={fullWidth}/>
+              <Explore />
+              <EventHorizontalList />
+              <Suggestions />
+              <Media/>
             </View>
-        </ScrollView>
+          )}
+      />
     </View>
   )
 }

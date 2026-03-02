@@ -25,7 +25,7 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submit = async () => {
-    router.push("/(auth)/RegisterOTP")
+    router.push("/(protected)/(drawer)/(tabs)/Home")
 
   }
 
