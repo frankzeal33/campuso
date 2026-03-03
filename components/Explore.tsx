@@ -1,4 +1,5 @@
 import { data } from '@/constants';
+import { router } from 'expo-router';
 import React from 'react';
 import { FlatList, Image, Pressable, Text, View } from 'react-native';
 
@@ -26,7 +27,7 @@ const Explore = () => {
         numColumns={4}
         columnWrapperStyle={{gap: 6, marginBottom: 6}}
         renderItem={({ item, index }) => (
-          <Pressable className='px-2 py-4 items-center flex-1 rounded-md' style={{backgroundColor: backgroundColors[index],}}>
+          <Pressable className='px-2 py-4 items-center flex-1 rounded-md' style={{backgroundColor: backgroundColors[index],}} onPress={() => router.push("/(protected)/(nodrawer)/ShopDetails")}>
             <Image
               style={{ width:28, height:28 }}
               source={item?.image}

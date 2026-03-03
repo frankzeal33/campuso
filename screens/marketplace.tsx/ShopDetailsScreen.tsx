@@ -1,9 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { Dimensions, ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
-import ImageView from "react-native-image-viewing";
+import React from "react";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -17,23 +15,9 @@ const HEADER_HEIGHT = 500;
 const ICON_SIZE = 36;
 const { width } = Dimensions.get("window");
 
-const images = [
-  {
-    uri: "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
-  },
-  {
-    uri: "https://images.unsplash.com/photo-1573273787173-0eb81a833b34",
-  },
-  {
-    uri: "https://images.unsplash.com/photo-1569569970363-df7b6160d111",
-  },
-];
-
-export default function EventDetailsScreen() {
+export default function ShopDetailsScreen() {
 
   const insets = useSafeAreaInsets();
-  const [visible, setIsVisible] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollY = useSharedValue(0);
   const prevScroll = useSharedValue(0);
@@ -70,8 +54,8 @@ export default function EventDetailsScreen() {
   const imageAnimatedStyle = useAnimatedStyle(() => {
     const height = interpolate(
       scrollY.value,
-      [0, HEADER_HEIGHT - insets.top],
-      [HEADER_HEIGHT - insets.top, 100],
+      [0, HEADER_HEIGHT],
+      [HEADER_HEIGHT, 100],
       Extrapolation.CLAMP
     );
     return { height };
@@ -100,34 +84,16 @@ export default function EventDetailsScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: "#003D33" }}>
       {/* Header Image */}
-      <Pressable
-        onPress={() => { setSelectedIndex(2); setIsVisible(true); }}
-        style={{ height: HEADER_HEIGHT }}
-      >
-        <ImageBackground
-          source={{ uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372180/1131w-LZtBbF-igKQ_f4e4ln.png" }}
-          style={[styles.headerImage, { height: HEADER_HEIGHT }]}
-          resizeMode="cover"
-        >
-          {/* Overlay */}
-          <View style={styles.overlay} pointerEvents="none"/>
-
-          {/* Second image (poster) */}
-          <Animated.Image
-            source={{ uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372180/1131w-LZtBbF-igKQ_f4e4ln.png" }}
-            style={[styles.posterImage, imageAnimatedStyle, { marginTop: insets.top}]} // animate if needed
-            resizeMode="cover"
-          />
-
-          {/* Event title */}
-          <View style={styles.eventTitleContainer}>
-            <Text style={styles.eventTitle}>1/4</Text>
-          </View>
-        </ImageBackground>
-      </Pressable>
+      <Animated.Image
+        source={{
+          uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372189/Green_Youth_Soccer_Camp_Event_Flyer_x01ayb.png",
+        }}
+        style={[styles.headerImage, imageAnimatedStyle]}
+        resizeMode="cover"
+      />
 
       {/* Top Icons */}
-      <Animated.View style={[styles.topIconsContainer, iconAnimatedStyle, { top: insets.top + 10 }]}>
+      <Animated.View style={[styles.topIconsContainer, iconAnimatedStyle]}>
         <Pressable style={styles.iconButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={ICON_SIZE} color="white" />
         </Pressable>
@@ -175,82 +141,19 @@ export default function EventDetailsScreen() {
           <Text style={{ color: "white", fontWeight: "bold" }}>Share</Text>
         </Pressable>
       </Animated.View>
-
-      <ImageView
-        images={images}
-        imageIndex={selectedIndex}
-        visible={visible}
-        onRequestClose={() => setIsVisible(false)}
-        FooterComponent={({ imageIndex }) => (
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: 'rgba(0,0,0,0.4)',
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                borderRadius: 6,
-              }}
-            >
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                {`${imageIndex + 1}/${images.length}`}
-              </Text>
-            </View>
-          </View>
-        )}
-      />
-
-      <StatusBar translucent backgroundColor="transparent" style="light" />
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   headerImage: {
     width: width,
     position: "absolute",
     top: 0,
-    zIndex: 0
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.9)",
-    // zIndex: 1,
-  },
-  posterImage: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    zIndex: 2
-  },
-  eventTitleContainer: {
-    position: "absolute",
-    bottom: 10,
-    right: 8,
-    zIndex: 3,
-    backgroundColor: "rgba(0,0,0,0.3)",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 6,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-  },
-  eventTitle: {
-    color: "#fff",
-    fontSize: 12,
-    fontWeight: "bold",
   },
   topIconsContainer: {
     position: "absolute",
+    top: 40, // safe area for iOS notch
     left: 16,
     right: 16,
     flexDirection: "row",
@@ -272,7 +175,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     padding: 20,
     minHeight: 800,
-    zIndex: 50
   },
   title: {
     fontSize: 20,

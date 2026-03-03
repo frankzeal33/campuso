@@ -143,7 +143,7 @@ const EventHorizontalList = () => {
         contentContainerStyle={{ gap: 10, paddingHorizontal: 16 }}
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={({ item }) => (
-          <Pressable className='p-2 w-64 bg-green rounded-xl' onPress={() => router.push("/(protected)/(nodrawer)/EventDetails")}>
+          <Pressable className='p-2 w-64 bg-inputBg rounded-xl overflow-hidden' onPress={() => router.push("/(protected)/(nodrawer)/EventDetails")}>
             <Image
               style={{width: "100%", height:250, borderRadius: 10}}
               source={{
@@ -151,8 +151,8 @@ const EventHorizontalList = () => {
               }}
               resizeMode={"cover"}
             />
-            <Text className='font-msbold text-yellow text-base mt-2 leading-5' numberOfLines={3}>{item?.title}</Text>
-            <Text className='font-msbold text-yellow-light text-xs mt-1'>{moment(`${item.date} ${item.time}`,"YYYY-MM-DD h:mm A").format("ddd, MMM Do ● h:mm A")}</Text>
+            <Text className='font-msbold text-base mt-2 leading-5' numberOfLines={3}>{item?.title}</Text>
+            <Text className='font-msbold text-xs mt-1'>{moment(`${item.date} ${item.time}`,"YYYY-MM-DD h:mm A").format("ddd, MMM Do ● h:mm A")}</Text>
           </Pressable>
         )}
         ListEmptyComponent={() => (
