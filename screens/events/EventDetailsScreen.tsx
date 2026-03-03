@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -97,34 +97,48 @@ export default function EventDetailsScreen() {
     };
   });
 
+  const fullscreenIconAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, HEADER_HEIGHT / 2], [1, 0], Extrapolation.CLAMP),
+    };
+  });
+
   return (
     <View style={{ flex: 1, backgroundColor: "#003D33" }}>
       {/* Header Image */}
-      <Pressable
-        onPress={() => { setSelectedIndex(2); setIsVisible(true); }}
-        style={{ height: HEADER_HEIGHT }}
+      <ImageBackground
+        source={{ uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372180/1131w-LZtBbF-igKQ_f4e4ln.png" }}
+        style={[styles.headerImage, { height: HEADER_HEIGHT }]}
+        resizeMode="cover"
       >
-        <ImageBackground
+        {/* Overlay */}
+        <View style={styles.overlay} pointerEvents="none"/>
+
+        {/* Second image (poster) */}
+        <Animated.Image
           source={{ uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372180/1131w-LZtBbF-igKQ_f4e4ln.png" }}
-          style={[styles.headerImage, { height: HEADER_HEIGHT }]}
+          style={[styles.posterImage, imageAnimatedStyle, { marginTop: insets.top}]} // animate if needed
           resizeMode="cover"
-        >
-          {/* Overlay */}
-          <View style={styles.overlay} pointerEvents="none"/>
+        />
 
-          {/* Second image (poster) */}
-          <Animated.Image
-            source={{ uri: "https://res.cloudinary.com/frankzeal/image/upload/v1772372180/1131w-LZtBbF-igKQ_f4e4ln.png" }}
-            style={[styles.posterImage, imageAnimatedStyle, { marginTop: insets.top}]} // animate if needed
-            resizeMode="cover"
-          />
+        {/* Event title */}
+        <View style={styles.eventTitleContainer}>
+          <Text style={styles.eventTitle}>1/4</Text>
+        </View>
+      </ImageBackground>
 
-          {/* Event title */}
-          <View style={styles.eventTitleContainer}>
-            <Text style={styles.eventTitle}>1/4</Text>
-          </View>
-        </ImageBackground>
-      </Pressable>
+      <Animated.View
+        style={[
+          styles.openImage,
+          styles.iconButton,
+          fullscreenIconAnimatedStyle,
+          { top: HEADER_HEIGHT - 46 }
+        ]}
+      >
+        <Pressable onPress={() => { setSelectedIndex(2); setIsVisible(true); }}>
+          <AntDesign name="fullscreen" size={ICON_SIZE} color="white" />
+        </Pressable>
+      </Animated.View>
 
       {/* Top Icons */}
       <Animated.View style={[styles.topIconsContainer, iconAnimatedStyle, { top: insets.top + 10 }]}>
@@ -258,6 +272,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 50
   },
+  openImage: {
+    position: "absolute",
+    left: 8,
+    zIndex: 40
+  },
   iconButton: {
     width: ICON_SIZE,
     height: ICON_SIZE,
@@ -272,7 +291,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     padding: 20,
     minHeight: 800,
-    zIndex: 50
+    zIndex: 60
   },
   title: {
     fontSize: 20,
