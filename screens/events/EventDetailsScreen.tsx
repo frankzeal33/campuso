@@ -99,7 +99,7 @@ export default function EventDetailsScreen() {
 
   const fullscreenIconAnimatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(scrollY.value, [0, HEADER_HEIGHT / 2], [1, 0], Extrapolation.CLAMP),
+      opacity: interpolate(scrollY.value, [0, HEADER_HEIGHT / 10], [1, 0], Extrapolation.CLAMP),
     };
   });
 
