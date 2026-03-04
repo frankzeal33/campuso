@@ -10,7 +10,9 @@ module.exports = {
             DEFAULT: "#008751",
             light: "#3BA440",
             lighter: "#E8FFE9",
-            drawer: "#E4FFE5"
+            drawer: "#E4FFE5",
+            emerald: "#064E3B",
+            dark: "#003D33"
           },
           yellow: {
             DEFAULT: "#FEC844",

@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import ImageDetailCarousel from "@/components/ImageDetailCarousel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -35,7 +36,7 @@ export default function EventDetailsScreen() {
     const contentHeight = event.contentSize.height;
     const layoutHeight = event.layoutMeasurement.height;
 
-    const isAtBottom = layoutHeight + currentOffset >= contentHeight - 10;
+    const isAtBottom = layoutHeight + currentOffset >= contentHeight - 100;
 
     if (isAtBottom) {
       showBottomButtons.value = 1;
@@ -94,7 +95,7 @@ export default function EventDetailsScreen() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#003D33" }}>
+    <View className="flex-1 bg-green-dark">
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
@@ -111,7 +112,7 @@ export default function EventDetailsScreen() {
         </Animated.View>
 
         {/* CONTENT */}
-        <View style={styles.content}>
+        <View style={[styles.content, { marginBottom: insets.bottom + 80}]} className="bg-green-emerald">
           <Text style={styles.title}>Consulate of Liberia, Lagos</Text>
           <Text style={styles.text}>
             Provides passport services and consular assistance for Liberian
@@ -158,13 +159,8 @@ export default function EventDetailsScreen() {
           bottomButtonsAnimatedStyle,
         ]}
       >
-        <Pressable style={styles.bottomButton}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Register</Text>
-        </Pressable>
-
-        <Pressable style={styles.bottomButton}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Share</Text>
-        </Pressable>
+        <CustomButton title="Register" containerStyles="flex-1 bg-yellow" textStyles='text-black'/>
+        <CustomButton title="Share" containerStyles="flex-1 bg-green-dark border border-yellow" textStyles='text-white'/>
       </Animated.View>
 
       <StatusBar translucent backgroundColor="transparent" style="light" />
@@ -199,8 +195,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   content: {
-    backgroundColor: "#064E3B",
-    borderRadius: 20,
+    borderRadius: 16,
     padding: 14,
     minHeight: 800,
     margin: 10,
@@ -221,14 +216,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     flexDirection: "row",
-    gap: 16,
-  },
-  bottomButton: {
-    flex: 1,
-    backgroundColor: "#10B981",
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+    gap: 10,
+  }
 });
