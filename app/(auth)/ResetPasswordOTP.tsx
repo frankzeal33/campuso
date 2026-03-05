@@ -98,7 +98,11 @@ export default ResetPasswordOTP
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    width: 280
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 10
   },
   pinCodeContainer: {
     backgroundColor: "#F3F3F3",
