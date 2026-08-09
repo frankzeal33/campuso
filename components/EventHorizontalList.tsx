@@ -100,7 +100,7 @@ const EventHorizontalList = () => {
         <Pressable
           onPress={() => router.push("/(protected)/(nodrawer)/Events" as any)}
         >
-          <Text className="font-msbold text-green text-base">View All</Text>
+          <Text className="font-msbold text-xs text-green">View All</Text>
         </Pressable>
       </View>
       {loading ? (

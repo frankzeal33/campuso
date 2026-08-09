@@ -147,11 +147,11 @@ export default function People() {
             <View
               className="mb-4 rounded-3xl bg-white p-4"
               style={{
-                elevation: 3,
+                elevation: 1,
                 shadowColor: "#000",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.08,
-                shadowRadius: 6,
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.04,
+                shadowRadius: 3,
               }}
             >
               <View className="flex-row items-center">

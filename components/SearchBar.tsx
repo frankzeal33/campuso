@@ -23,7 +23,7 @@ export default function SearchBar({
 
   return (
     <View
-      className={`mx-4 mb-4 flex-row items-center rounded-2xl border border-gray-100 bg-gray-light px-4 ${containerStyles ?? ""}`}
+      className={`${bottomSheet ? "mx-0" : "mx-4"} mb-4 flex-row items-center rounded-2xl border border-gray-100 bg-gray-light px-4 ${containerStyles ?? ""}`}
     >
       <Ionicons name="search" size={20} color="#787878" />
       <Input

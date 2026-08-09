@@ -89,7 +89,7 @@ const Media = () => {
             router.push("/(protected)/(nodrawer)/CampusNews" as any)
           }
         >
-          <Text className="font-msbold text-green text-base">View All</Text>
+          <Text className="font-msbold text-xs text-green">View All</Text>
         </Pressable>
       </View>
       {loading ? (
