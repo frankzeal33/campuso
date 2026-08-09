@@ -1,7 +1,9 @@
 import { useFonts } from "expo-font";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ToastManager from "toastify-react-native";
 import "../global.css";
 
@@ -29,16 +31,18 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-      </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+        </Stack>
 
-      <ToastManager
-        theme={"light"}
-        // backgroundColor={scheme === 'dark' ? '#1F2937' : '#FFFFFF'}
-        // textStyle={{ color: scheme === 'dark' ? '#E5E7EB' : '#111827' }}
-      />
-    </>
+        <ToastManager
+          theme={"light"}
+          // backgroundColor={scheme === 'dark' ? '#1F2937' : '#FFFFFF'}
+          // textStyle={{ color: scheme === 'dark' ? '#E5E7EB' : '#111827' }}
+        />
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }

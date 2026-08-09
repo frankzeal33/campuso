@@ -8,6 +8,7 @@ type Props = {
   subtitle?: string;
   back?: boolean;
   action?: ReactNode;
+  titleClassName?: string;
 };
 
 export default function AppScreenHeader({
@@ -15,6 +16,7 @@ export default function AppScreenHeader({
   subtitle,
   back,
   action,
+  titleClassName,
 }: Props) {
   return (
     <View className="flex-row items-center gap-3 px-4 pb-4 pt-3">
@@ -27,7 +29,11 @@ export default function AppScreenHeader({
         </Pressable>
       )}
       <View className="flex-1">
-        <Text className="font-mbold text-2xl text-gray">{title}</Text>
+        <Text
+          className={`font-mbold text-gray ${titleClassName ?? "text-2xl"}`}
+        >
+          {title}
+        </Text>
         {subtitle ? (
           <Text className="mt-0.5 font-mregular text-xs text-gray-300">
             {subtitle}

@@ -1,10 +1,30 @@
 import AppScreenHeader from "@/components/AppScreenHeader";
+import useWalletStore from "@/store/WalletStore";
+import { useReferralStore } from "@/store/ReferralStore";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const menu = [
+  {
+    label: "Campus safety & SOS",
+    note: "Emergency help, trusted contacts and reports",
+    icon: "shield-checkmark-outline",
+    route: "/(protected)/(nodrawer)/CampusSafety",
+  },
+  {
+    label: "Anonymous campus help",
+    note: "Ask sensitive questions without showing your identity",
+    icon: "chatbubbles-outline",
+    route: "/(protected)/(nodrawer)/AnonymousHelp",
+  },
+  {
+    label: "Campus planner",
+    note: "Track classes and assignment deadlines",
+    icon: "calendar-outline",
+    route: "/(protected)/(nodrawer)/CampusPlanner",
+  },
   {
     label: "Campus news",
     note: "Announcements and school updates",
@@ -33,6 +53,7 @@ const menu = [
     label: "Saved items",
     note: "Posts, shops and listings",
     icon: "bookmark-outline",
+    route: "/(protected)/(nodrawer)/SavedItems",
   },
   {
     label: "Notifications",
@@ -47,6 +68,12 @@ const menu = [
     route: "/(protected)/(nodrawer)/Security",
   },
   {
+    label: "Discovery settings",
+    note: "Choose whether to explore other schools",
+    icon: "school-outline",
+    route: "/(protected)/(nodrawer)/DiscoverySettings",
+  },
+  {
     label: "Help & support",
     note: "Get answers and contact us",
     icon: "help-circle-outline",
@@ -56,6 +83,8 @@ const menu = [
 
 export default function More() {
   const insets = useSafeAreaInsets();
+  const walletTotal = useWalletStore((state) => state.wallet.total);
+  const rewardPoints = useReferralStore((state) => state.refData.totalEarned);
   return (
     <View className="flex-1 bg-white" style={{ paddingTop: insets.top }}>
       <AppScreenHeader
@@ -90,24 +119,36 @@ export default function More() {
           <Ionicons name="chevron-forward" size={22} color="white" />
         </Pressable>
         <View className="mb-5 flex-row gap-3">
-          <View className="flex-1 rounded-2xl bg-yellow-light p-4">
+          <Pressable
+            onPress={() => router.push("/(protected)/(nodrawer)/CampusWallet" as any)}
+            className="flex-1 rounded-2xl bg-yellow-light p-4"
+          >
+            <View className="flex-row items-start justify-between">
             <MaterialCommunityIcons
               name="wallet-outline"
               size={24}
               color="#8A5A00"
             />
+              <Ionicons name="arrow-forward-circle" size={22} color="#8A5A00" />
+            </View>
             <Text className="mt-4 font-mregular text-[11px] text-gray-300">
               Campuso wallet
             </Text>
-            <Text className="mt-1 font-mbold text-lg">₦0.00</Text>
-          </View>
-          <View className="flex-1 rounded-2xl bg-green-drawer p-4">
+            <Text className="mt-1 font-mbold text-lg">₦{walletTotal.toLocaleString()}.00</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/(protected)/(nodrawer)/ReferralWallet" as any)}
+            className="flex-1 rounded-2xl bg-green-drawer p-4"
+          >
+            <View className="flex-row items-start justify-between">
             <Ionicons name="gift-outline" size={24} color="#008751" />
+              <Ionicons name="arrow-forward-circle" size={22} color="#008751" />
+            </View>
             <Text className="mt-4 font-mregular text-[11px] text-gray-300">
-              Reward points
+              Referral rewards
             </Text>
-            <Text className="mt-1 font-mbold text-lg">120 pts</Text>
-          </View>
+            <Text className="mt-1 font-mbold text-lg">{rewardPoints} pts</Text>
+          </Pressable>
         </View>
         <Text className="mb-2 font-msbold text-xs uppercase tracking-widest text-gray-300">
           Account

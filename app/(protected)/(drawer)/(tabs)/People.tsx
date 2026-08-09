@@ -1,9 +1,13 @@
 import AppScreenHeader from "@/components/AppScreenHeader";
+import AdvertisementCarousel from "@/components/AdvertisementCarousel";
 import SearchBar from "@/components/SearchBar";
 import { people } from "@/constants/appData";
+import { useDiscoveryStore } from "@/store/DiscoveryStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
-import { useMemo, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function People() {
@@ -11,12 +15,51 @@ export default function People() {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState("Everyone");
   const [connected, setConnected] = useState<string[]>([]);
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  const { allowCrossSchool, initializeDiscovery } = useDiscoveryStore();
+  const modes = [
+    "Everyone",
+    "Study partners",
+    "Friends",
+    "Dating",
+    ...(allowCrossSchool ? ["Other schools"] : []),
+  ];
+
+  useEffect(() => {
+    initializeDiscovery();
+  }, [initializeDiscovery]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const loadUnreadMessages = async () => {
+        const saved = await AsyncStorage.getItem("chat-conversations");
+        if (!saved) {
+          setUnreadMessages(6);
+          return;
+        }
+        const conversations = JSON.parse(saved) as { unread?: number }[];
+        setUnreadMessages(
+          conversations.reduce((total, item) => total + (item.unread || 0), 0),
+        );
+      };
+
+      loadUnreadMessages();
+    }, []),
+  );
+
+  useEffect(() => {
+    if (!allowCrossSchool && mode === "Other schools") setMode("Everyone");
+  }, [allowCrossSchool, mode]);
+
   const results = useMemo(
     () =>
-      people.filter((person) =>
-        person.name.toLowerCase().includes(query.toLowerCase()),
+      people.filter(
+        (person) =>
+          person.name.toLowerCase().includes(query.toLowerCase()) &&
+          (person.isSameSchool || allowCrossSchool) &&
+          (mode !== "Other schools" || !person.isSameSchool),
       ),
-    [query],
+    [allowCrossSchool, mode, query],
   );
   const toggle = (id: string) =>
     setConnected((value) =>
@@ -28,9 +71,19 @@ export default function People() {
         title="People"
         subtitle="Meet people in your campus community"
         action={
-          <View className="size-10 items-center justify-center rounded-full bg-green-lighter">
-            <Ionicons name="people-outline" size={22} color="#008751" />
-          </View>
+          <Pressable
+            onPress={() => router.push("/(protected)/(nodrawer)/Chats" as any)}
+            className="size-10 items-center justify-center rounded-full bg-green-lighter"
+          >
+            <Ionicons name="chatbubbles-outline" size={21} color="#008751" />
+            {unreadMessages > 0 ? (
+              <View className="absolute -right-1 -top-1 min-w-5 items-center justify-center rounded-full border-2 border-white bg-red-500 px-1 py-0.5">
+                <Text className="font-msbold text-[8px] text-white">
+                  {unreadMessages > 99 ? "99+" : unreadMessages}
+                </Text>
+              </View>
+            ) : null}
+          </Pressable>
         }
       />
       <SearchBar
@@ -48,8 +101,9 @@ export default function People() {
         }}
         ListHeaderComponent={
           <View>
+            <AdvertisementCarousel placement="people" />
             <FlatList
-              data={["Everyone", "Study partners", "Friends", "Dating"]}
+              data={modes}
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item}
@@ -76,6 +130,8 @@ export default function People() {
               <Text className="font-mbold text-xl text-white">
                 {mode === "Everyone"
                   ? "Find your campus circle"
+                  : mode === "Other schools"
+                    ? "Explore beyond your campus"
                   : `Find ${mode.toLowerCase()}`}
               </Text>
               <Text className="mt-1 font-mregular text-sm leading-5 text-white/80">
@@ -88,40 +144,94 @@ export default function People() {
         renderItem={({ item }) => {
           const active = connected.includes(item.id);
           return (
-            <View className="mb-3 flex-row items-center rounded-2xl bg-gray-light p-3">
-              <View className="size-14 items-center justify-center rounded-full bg-green-drawer">
-                <Text className="font-mbold text-lg text-green">
-                  {item.initials}
-                </Text>
-              </View>
-              <View className="ml-3 flex-1">
-                <Text className="font-msbold text-sm text-gray">
-                  {item.name}
-                </Text>
-                <Text className="mt-0.5 font-mregular text-[11px] text-gray-300">
-                  {item.course}
-                </Text>
-                <View className="mt-2 flex-row gap-1">
-                  {item.interests.map((interest) => (
+            <View
+              className="mb-4 rounded-3xl bg-white p-4"
+              style={{
+                elevation: 3,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 6,
+              }}
+            >
+              <View className="flex-row items-center">
+                <View className="relative">
+                  {item.image ? (
+                    <Image
+                      source={item.image}
+                      className="size-16 rounded-full"
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <View className="size-16 items-center justify-center rounded-full bg-green-drawer">
+                      <Text className="font-mbold text-lg text-green">
+                        {item.initials}
+                      </Text>
+                    </View>
+                  )}
+                  <View className="absolute bottom-0 right-0 size-4 rounded-full border-2 border-white bg-green-light" />
+                </View>
+                <View className="ml-3 flex-1">
+                  <View className="flex-row items-center gap-1">
                     <Text
-                      key={interest}
-                      className="rounded-full bg-white px-2 py-1 font-mmedium text-[9px] text-gray-300"
+                      className="flex-shrink font-msbold text-[15px] text-gray"
+                      numberOfLines={1}
                     >
-                      {interest}
+                      {item.name}
                     </Text>
-                  ))}
+                    <Ionicons name="checkmark-circle" size={15} color="#008751" />
+                  </View>
+                  <Text className="mt-1 font-mregular text-[11px] text-gray-300">
+                    {item.course}
+                  </Text>
+                  {!item.isSameSchool ? (
+                    <Text className="mt-1 font-mmedium text-[10px] text-green">
+                      {item.school}
+                    </Text>
+                  ) : null}
+                  <Text className="mt-1 font-mmedium text-[10px] text-green">
+                    Active now
+                  </Text>
                 </View>
               </View>
-              <Pressable
-                onPress={() => toggle(item.id)}
-                className={`rounded-full px-3 py-2 ${active ? "bg-green-lighter" : "bg-green"}`}
-              >
-                <Text
-                  className={`font-msbold text-[11px] ${active ? "text-green" : "text-white"}`}
+
+              <View className="mt-3 flex-row gap-2">
+                {item.interests.map((interest) => (
+                  <Text
+                    key={interest}
+                    className="rounded-full bg-gray-light px-3 py-1.5 font-mmedium text-[9px] text-gray-300"
+                  >
+                    {interest}
+                  </Text>
+                ))}
+              </View>
+
+              <View className="mt-4 flex-row gap-2">
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: "/(protected)/(nodrawer)/Chat",
+                      params: { id: item.id, title: item.name },
+                    } as any)
+                  }
+                  className="h-10 flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-green"
                 >
-                  {active ? "Connected" : "Connect"}
-                </Text>
-              </Pressable>
+                  <Ionicons name="chatbubble-outline" size={15} color="#008751" />
+                  <Text className="font-msbold text-[11px] text-green">
+                    Message
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => toggle(item.id)}
+                  className={`h-10 flex-1 items-center justify-center rounded-xl ${active ? "bg-green-lighter" : "bg-green"}`}
+                >
+                  <Text
+                    className={`text-center font-msbold text-[11px] ${active ? "text-green" : "text-white"}`}
+                  >
+                    {active ? "Connected" : "Connect"}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           );
         }}

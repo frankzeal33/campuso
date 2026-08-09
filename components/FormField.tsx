@@ -17,6 +17,8 @@ type formProps = {
   inputBg?: string;
   disabled?: boolean;
   otherStyles?: string;
+  inputContainerStyles?: string;
+  inputStyles?: string;
   keyboardType?: KeyboardTypeOptions;
   [props: string]: any;
 };
@@ -31,6 +33,8 @@ const FormField = ({
   disabled,
   labelStyle,
   otherStyles,
+  inputContainerStyles,
+  inputStyles,
   ...props
 }: formProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,10 +55,10 @@ const FormField = ({
         ""
       )}
       <View
-        className={`${inputBg ? inputBg : "bg-inputBg"} border border-inputBg w-full h-[52px] px-4 rounded-md focus:border-orange-300 items-center flex-row gap-1`}
+        className={`${inputBg ? inputBg : "bg-inputBg"} border border-inputBg w-full h-[52px] px-4 rounded-md focus:border-orange-300 items-center flex-row gap-1 ${inputContainerStyles ?? ""}`}
       >
         <TextInput
-          className={`${inputBg ? inputBg : "bg-inputBg"} flex-1 text-black font-aregular text-base h-full`}
+          className={`${inputBg ? inputBg : "bg-inputBg"} flex-1 text-black font-mregular text-base h-full ${inputStyles ?? ""}`}
           style={{ textAlignVertical: "center" }}
           value={value}
           placeholder={placeholder}

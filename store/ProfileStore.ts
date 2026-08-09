@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface UserProfile {
+export interface UserProfile {
   phoneNumber: string;
   countryOfResidence: string;
   email: string;
@@ -12,6 +12,11 @@ interface UserProfile {
   isProfileCreated: boolean;
   dateOfBirth: string;
   isEmailVerified: boolean;
+  school: string;
+  course: string;
+  level: string;
+  bio: string;
+  interests: string[];
 }
 
 interface ProfileStore {
@@ -34,6 +39,11 @@ const defaultUserProfile: UserProfile = {
   isProfileCreated: false,
   dateOfBirth: "",
   isEmailVerified: false,
+  school: "",
+  course: "",
+  level: "",
+  bio: "",
+  interests: [],
 };
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -42,7 +52,7 @@ export const useProfileStore = create<ProfileStore>((set) => ({
 
   setProfile: (profile) =>
     set(() => ({
-      userProfile: profile,
+      userProfile: { ...defaultUserProfile, ...profile },
     })),
 
   setEmail: (email) =>

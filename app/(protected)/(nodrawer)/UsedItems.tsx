@@ -1,6 +1,7 @@
 import AppScreenHeader from "@/components/AppScreenHeader";
 import SearchBar from "@/components/SearchBar";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,6 +14,7 @@ const usedItems = [
     price: "₦285,000",
     image:
       "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80",
+    isOwner: true,
   },
   {
     id: "2",
@@ -21,6 +23,7 @@ const usedItems = [
     price: "₦45,000",
     image:
       "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=800&q=80",
+    isOwner: false,
   },
   {
     id: "3",
@@ -29,6 +32,7 @@ const usedItems = [
     price: "₦18,500",
     image:
       "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80",
+    isOwner: false,
   },
   {
     id: "4",
@@ -37,6 +41,7 @@ const usedItems = [
     price: "₦95,000",
     image:
       "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=800&q=80",
+    isOwner: false,
   },
 ];
 export default function UsedItems() {
@@ -85,6 +90,18 @@ export default function UsedItems() {
               className="h-32 w-full"
               resizeMode="cover"
             />
+            {item.isOwner ? (
+              <Pressable
+                onPress={(event) => {
+                  event.stopPropagation();
+                  router.push({ pathname: "/(protected)/(nodrawer)/EditOwnedContent", params: { type: "listing", title: item.title, detail: item.condition } } as any);
+                }}
+                className="absolute right-2 top-2 flex-row items-center rounded-full bg-white px-2.5 py-1.5"
+              >
+                <Ionicons name="pencil-outline" size={11} color="#008751" />
+                <Text className="ml-1 font-msbold text-[8px] text-green">Edit</Text>
+              </Pressable>
+            ) : null}
             <View className="p-3">
               <Text className="font-msbold text-sm" numberOfLines={2}>
                 {item.title}

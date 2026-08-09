@@ -48,7 +48,19 @@
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow Campuso to access your location for local weather and location sharing during a safety situation."
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow Campuso to access your contacts so you can choose trusted emergency contacts."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

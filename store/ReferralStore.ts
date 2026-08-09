@@ -6,18 +6,27 @@ interface RefData {
   totalEarned: number;
 }
 
+export interface ReferralHistoryItem {
+  id: string;
+  name: string;
+  status: "earned" | "pending";
+  points: number;
+  date: string;
+}
+
 interface ReferralStore {
   refData: RefData;
   setReferralInfo: (payload: RefData) => void;
   referralLoading: boolean;
   setReferralLoading: (payload: boolean) => void;
+  history: ReferralHistoryItem[];
 }
 
 export const useReferralStore = create<ReferralStore>((set) => ({
   refData: {
-    invitees: 0,
-    referralCode: "",
-    totalEarned: 0,
+    invitees: 3,
+    referralCode: "CAMPUSO-OD24",
+    totalEarned: 120,
   },
 
   setReferralInfo: (payload) =>
@@ -26,6 +35,11 @@ export const useReferralStore = create<ReferralStore>((set) => ({
     })),
 
   referralLoading: true,
+  history: [
+    { id: "ref-1", name: "Chiamaka joined Campuso", status: "earned", points: 50, date: "Aug 8" },
+    { id: "ref-2", name: "Tobi completed verification", status: "earned", points: 50, date: "Aug 4" },
+    { id: "ref-3", name: "Amara signed up", status: "pending", points: 20, date: "Aug 2" },
+  ],
 
   setReferralLoading: (loading) => set({ referralLoading: loading }),
 }));

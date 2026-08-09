@@ -158,7 +158,11 @@ export default function ServiceActionScreen({ kind }: { kind: Kind }) {
 
   return (
     <View className="flex-1 bg-white" style={{ paddingTop: insets.top }}>
-      <AppScreenHeader title={current.title} subtitle={current.subtitle} back />
+      <AppScreenHeader
+        title={kind === "bill" ? displayTitle : current.title}
+        subtitle={current.subtitle}
+        back
+      />
       {isForm ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -167,8 +171,8 @@ export default function ServiceActionScreen({ kind }: { kind: Kind }) {
             paddingBottom: insets.bottom + 110,
           }}
         >
-          <Hero />
-          <View className="mt-2">
+          {kind !== "bill" ? <Hero /> : null}
+          <View className={kind !== "bill" ? "mt-2" : ""}>
             <FormField
               title={
                 kind === "bill"

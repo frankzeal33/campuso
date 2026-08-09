@@ -5,6 +5,12 @@ import card2 from "../assets/images/card-2.png";
 import card3 from "../assets/images/card-3.png";
 import Animatedcheck from "../assets/images/check.json";
 import event from "../assets/images/event.png";
+import eventBusiness from "../assets/images/event-business.png";
+import eventCareer from "../assets/images/event-career.png";
+import eventCulture from "../assets/images/event-culture.png";
+import eventFootball from "../assets/images/event-football.png";
+import eventMusic from "../assets/images/event-music.png";
+import eventTech from "../assets/images/event-tech.png";
 import featured1 from "../assets/images/featured1.png";
 import featured2 from "../assets/images/featured2.png";
 import featured3 from "../assets/images/featured3.png";
@@ -33,5 +39,11 @@ export default {
   boxPackage,
   localMarket,
   event,
+  eventBusiness,
+  eventCareer,
+  eventCulture,
+  eventFootball,
+  eventMusic,
+  eventTech,
   more,
 };

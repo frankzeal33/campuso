@@ -1,5 +1,6 @@
 import EventHorizontalList from "@/components/EventHorizontalList";
 import Explore from "@/components/Explore";
+import HomeHighlights from "@/components/HomeHighlights";
 import Media from "@/components/Media";
 import Suggestions from "@/components/Suggestions";
 import { images } from "@/constants";
@@ -159,7 +160,7 @@ const HomeScreen = () => {
             router.push("/(protected)/(nodrawer)/Notifications" as any)
           }
         >
-          <View className="absolute -right-0.5 -top-1 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 z-50">
+          <View className="absolute -right-0.5 -top-1 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 z-50">
             <Text className="font-mmedium text-[10px] text-white">4</Text>
           </View>
           <Octicons name="bell-fill" size={24} color="#218225" />
@@ -174,8 +175,10 @@ const HomeScreen = () => {
           <View className="flex-1">
             <CarouselComponent width={fullWidth} />
             <Explore />
-            <EventHorizontalList />
-            <Suggestions />
+            <HomeHighlights
+              afterToday={<Suggestions />}
+              beforeNearby={<EventHorizontalList />}
+            />
             <Media />
           </View>
         )}

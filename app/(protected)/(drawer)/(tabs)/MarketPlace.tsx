@@ -1,9 +1,11 @@
 import AppScreenHeader from "@/components/AppScreenHeader";
+import AdvertisementCarousel from "@/components/AdvertisementCarousel";
 import SearchBar from "@/components/SearchBar";
 import { marketplaceCategories, products, vendors } from "@/constants/appData";
+import { useSavedItemsStore } from "@/store/SavedItemsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -12,20 +14,29 @@ export default function MarketPlace() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [browseBy, setBrowseBy] = useState<"Products" | "Vendors">("Products");
+  const { initializeSavedItems, isSaved, toggleSavedItem } =
+    useSavedItemsStore();
+
+  useEffect(() => {
+    initializeSavedItems();
+  }, [initializeSavedItems]);
+
   const results = useMemo(
     () =>
       browseBy === "Products"
-        ? products.filter((item) =>
-            `${item.name} ${item.seller}`
-              .toLowerCase()
-              .includes(query.toLowerCase()),
+        ? products.filter(
+            (item) =>
+              (category === "All" || item.category === category) &&
+              `${item.name} ${item.seller}`
+                .toLowerCase()
+                .includes(query.toLowerCase()),
           )
         : vendors.filter((item) =>
             `${item.name} ${item.category}`
               .toLowerCase()
               .includes(query.toLowerCase()),
           ),
-    [browseBy, query],
+    [browseBy, category, query],
   );
 
   return (
@@ -55,6 +66,7 @@ export default function MarketPlace() {
         }}
         ListHeaderComponent={
           <View>
+            <AdvertisementCarousel placement="marketplace" />
             <FlatList
               data={["Products", "Vendors"] as const}
               horizontal
@@ -126,8 +138,31 @@ export default function MarketPlace() {
                   className="h-full w-full"
                   resizeMode="cover"
                 />
-                <Pressable className="absolute right-3 top-3 size-8 items-center justify-center rounded-full bg-white">
-                  <Ionicons name="heart-outline" size={17} color="#2F2F2F" />
+                <Pressable
+                  onPress={(event) => {
+                    event.stopPropagation();
+                    toggleSavedItem({
+                      id: `marketplace-${item.id}`,
+                      type: "Marketplace",
+                      title: item.name,
+                      subtitle: `${item.seller} · ${item.price}`,
+                      image: item.image,
+                      route: "/(protected)/(nodrawer)/ShopDetails",
+                    });
+                  }}
+                  className="absolute right-3 top-3 size-8 items-center justify-center rounded-full bg-white"
+                >
+                  <Ionicons
+                    name={
+                      isSaved(`marketplace-${item.id}`)
+                        ? "heart"
+                        : "heart-outline"
+                    }
+                    size={17}
+                    color={
+                      isSaved(`marketplace-${item.id}`) ? "#008751" : "#2F2F2F"
+                    }
+                  />
                 </Pressable>
               </View>
               <View className="p-3">

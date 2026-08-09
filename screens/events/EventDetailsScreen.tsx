@@ -1,9 +1,10 @@
 import CustomButton from "@/components/CustomButton";
 import ImageDetailCarousel from "@/components/ImageDetailCarousel";
+import { useSavedItemsStore } from "@/store/SavedItemsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   Extrapolation,
@@ -26,6 +27,13 @@ const carouselImages = [
 
 export default function EventDetailsScreen() {
   const insets = useSafeAreaInsets();
+  const { initializeSavedItems, isSaved, toggleSavedItem } =
+    useSavedItemsStore();
+  const savedId = "event-featured-consulate";
+
+  useEffect(() => {
+    initializeSavedItems();
+  }, [initializeSavedItems]);
 
   const scrollY = useSharedValue(0);
   const prevScroll = useSharedValue(0);
@@ -145,8 +153,24 @@ export default function EventDetailsScreen() {
         </Pressable>
 
         <View style={{ flexDirection: "row", gap: 12 }}>
-          <Pressable style={styles.iconButton}>
-            <Ionicons name="heart-outline" size={20} color="white" />
+          <Pressable
+            style={styles.iconButton}
+            onPress={() =>
+              toggleSavedItem({
+                id: savedId,
+                type: "Events",
+                title: "Consulate of Liberia, Lagos",
+                subtitle: "Featured campus event",
+                image: carouselImages[0],
+                route: "/(protected)/(nodrawer)/EventDetails",
+              })
+            }
+          >
+            <Ionicons
+              name={isSaved(savedId) ? "heart" : "heart-outline"}
+              size={20}
+              color="white"
+            />
           </Pressable>
           <Pressable style={styles.iconButton}>
             <Ionicons name="share-social-outline" size={22} color="white" />

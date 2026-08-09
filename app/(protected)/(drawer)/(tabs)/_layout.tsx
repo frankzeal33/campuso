@@ -76,11 +76,21 @@ export default function TabLayout() {
           position: "relative",
           elevation: 0,
         },
+        tabBarBadgeStyle: {
+          backgroundColor: "#eb4d4b",
+          color: "#fff",
+          fontSize: 10,
+          fontWeight: "bold",
+          minWidth: 18,
+          height: 18,
+          borderRadius: 9,
+          textAlign: "center"
+        }
       })}
     >
       <Tabs.Screen name="Home" options={{ title: "Home" }} />
       <Tabs.Screen name="MarketPlace" options={{ title: "MarketPlace" }} />
-      <Tabs.Screen name="People" options={{ title: "People" }} />
+      <Tabs.Screen name="People" options={{ title: "People", tabBarBadge: 2 }} />
       <Tabs.Screen name="Find" options={{ title: "Find" }} />
       <Tabs.Screen name="More" options={{ title: "More" }} />
     </Tabs>
