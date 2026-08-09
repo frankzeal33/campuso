@@ -112,7 +112,10 @@ export default function EventDetailsScreen() {
         </Animated.View>
 
         {/* CONTENT */}
-        <View style={[styles.content, { marginBottom: insets.bottom + 80}]} className="bg-green-emerald">
+        <View
+          style={[styles.content, { marginBottom: insets.bottom + 80 }]}
+          className="bg-green-emerald"
+        >
           <Text style={styles.title}>Consulate of Liberia, Lagos</Text>
           <Text style={styles.text}>
             Provides passport services and consular assistance for Liberian
@@ -159,8 +162,16 @@ export default function EventDetailsScreen() {
           bottomButtonsAnimatedStyle,
         ]}
       >
-        <CustomButton title="Register" containerStyles="flex-1 bg-yellow" textStyles='text-black'/>
-        <CustomButton title="Share" containerStyles="flex-1 bg-green-dark border border-yellow" textStyles='text-white'/>
+        <CustomButton
+          title="Register"
+          containerStyles="flex-1 bg-yellow"
+          textStyles="text-black"
+        />
+        <CustomButton
+          title="Share"
+          containerStyles="flex-1 bg-green-light"
+          textStyles="text-white"
+        />
       </Animated.View>
 
       <StatusBar translucent backgroundColor="transparent" style="light" />
@@ -217,5 +228,5 @@ const styles = StyleSheet.create({
     right: 20,
     flexDirection: "row",
     gap: 10,
-  }
+  },
 });

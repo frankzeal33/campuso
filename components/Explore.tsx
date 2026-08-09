@@ -1,7 +1,7 @@
-import { data } from '@/constants';
-import { router } from 'expo-router';
-import React from 'react';
-import { FlatList, Image, Pressable, Text, View } from 'react-native';
+import { data } from "@/constants";
+import { router } from "expo-router";
+import React from "react";
+import { FlatList, Image, Pressable, Text, View } from "react-native";
 
 const backgroundColors = [
   "#EEEAF7", // Restaurants (light purple)
@@ -15,31 +15,49 @@ const backgroundColors = [
 ];
 
 const Explore = () => {
+  const destinations: Record<number, string> = {
+    1: "/(protected)/(nodrawer)/Restaurants",
+    2: "/(protected)/(nodrawer)/Shops",
+    3: "/(protected)/(nodrawer)/Pharmacies",
+    4: "/(protected)/(nodrawer)/Bills",
+    5: "/(protected)/(nodrawer)/Packages",
+    6: "/(protected)/(nodrawer)/Markets",
+    7: "/(protected)/(nodrawer)/Events",
+    8: "/(protected)/(nodrawer)/Services",
+  };
 
   return (
-    <View className='pt-2 px-4'>
-      <View className='w-full pb-2 flex-row items-center justify-between gap-1'>
-        <Text className='font-msbold text-base'>Explore</Text>
+    <View className="pt-2 px-4">
+      <View className="w-full pb-2 flex-row items-center justify-between gap-1">
+        <Text className="font-msbold text-base">Explore</Text>
       </View>
       <FlatList
         data={data.explore}
         keyExtractor={(item, index) => item.id.toString()}
         numColumns={4}
-        columnWrapperStyle={{gap: 6, marginBottom: 6}}
+        columnWrapperStyle={{ gap: 6, marginBottom: 6 }}
         renderItem={({ item, index }) => (
-          <Pressable className='px-2 py-4 items-center flex-1 rounded-md' style={{backgroundColor: backgroundColors[index],}} onPress={() => router.push("/(protected)/(nodrawer)/ShopDetails")}>
+          <Pressable
+            className="px-2 py-4 items-center flex-1 rounded-md"
+            style={{ backgroundColor: backgroundColors[index] }}
+            onPress={() => router.push(destinations[item.id] as any)}
+          >
             <Image
-              style={{ width:28, height:28 }}
+              style={{ width: 28, height: 28 }}
               source={item?.image}
               resizeMode="contain"
             />
-            <Text className='font-mmedium text-center text-[9px] leading-4 mt-1' numberOfLines={3}>{item?.title}</Text>
+            <Text
+              className="font-mmedium text-center text-[9px] leading-4 mt-1"
+              numberOfLines={3}
+            >
+              {item?.title}
+            </Text>
           </Pressable>
         )}
       />
-
     </View>
-  )
-}
+  );
+};
 
-export default Explore
+export default Explore;

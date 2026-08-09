@@ -10,37 +10,34 @@ import { useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 export default function App() {
-
-  const {login, logout, isLoading, setLoading, isAuthenticated } = useAuthStore((state) => state);
+  const { login, logout, isLoading, setLoading, isAuthenticated } =
+    useAuthStore((state) => state);
   const setProfile = useProfileStore((state) => state.setProfile);
   const setHideWallet = useWalletStore((state) => state.setHideWallet);
-  
-useEffect(() => {
-  
+
+  useEffect(() => {
     const getData = async () => {
       try {
         const storedToken = await SecureStore.getItemAsync("accessToken");
-        const userProfile = await AsyncStorage.getItem('userProfile');
-        const hideStatus = await AsyncStorage.getItem('hideBalance');
+        const userProfile = await AsyncStorage.getItem("userProfile");
+        const hideStatus = await AsyncStorage.getItem("hideBalance");
         const user = userProfile ? JSON.parse(userProfile) : null;
 
         if (storedToken) {
           if (user) {
-            console.log("redux user", user)
+            console.log("redux user", user);
             setProfile(user);
           }
-          login(storedToken)
-          setHideWallet(hideStatus)
+          login(storedToken);
+          setHideWallet(hideStatus);
         } else {
           logout();
         }
-
       } catch (error) {
         logout();
       } finally {
         setLoading(false);
       }
-      
     };
 
     getData();
@@ -62,7 +59,11 @@ useEffect(() => {
     );
   }
 
-  return <Redirect href={isAuthenticated ? "/(protected)/(tabs)/Home" : "/(auth)"} />;
+  return (
+    <Redirect
+      href={isAuthenticated ? "/(protected)/(drawer)/(tabs)/Home" : "/(auth)"}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   logo: {
     width: 140,

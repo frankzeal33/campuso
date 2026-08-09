@@ -1,45 +1,64 @@
-import AuthHeader from '@/components/AuthHeader'
-import CountDown from '@/components/CountDown'
-import CustomButton from '@/components/CustomButton'
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
-import { router } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { OtpInput } from 'react-native-otp-entry'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import AuthHeader from "@/components/AuthHeader";
+import CountDown from "@/components/CountDown";
+import CustomButton from "@/components/CustomButton";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { OtpInput } from "react-native-otp-entry";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ResetPasswordOTP = () => {
-
   const { bottom } = useSafeAreaInsets();
 
-  const [otp, setOtp] = useState('')
+  const [otp, setOtp] = useState("");
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [resendLoading, setResendLoading] = useState(false)
-  const [resend, setResend] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resend, setResend] = useState(false);
   const [emailKey, setEmailKey] = useState(0);
 
   const submit = async () => {
-    router.push("/(auth)/NewResetPassword")
+    router.push("/(auth)/NewResetPassword");
+  };
 
-  }
-
-  const resendOtp = async () => {
-
-  }
+  const resendOtp = async () => {};
 
   return (
     <View className="flex-1 bg-green">
-      <AuthHeader/>
-      <View className='flex-1 bg-white px-5 rounded-t-3xl'>
-        <KeyboardAvoidingView className='flex-1' behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}>
-          <ScrollView showsVerticalScrollIndicator={false} className='flex-1'>
+      <AuthHeader />
+      <View className="flex-1 bg-white px-4 rounded-t-3xl">
+        <KeyboardAvoidingView
+          className="flex-1"
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 30 : 0}
+        >
+          <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
             <View className="w-full justify-center my-6">
-              <Text className="text-2xl text-center text-green font-msbold">Reset your password</Text>
-              <Text className="text-sm text-center font-mregular mb-8">Enter <Text className='text-gray-300 font-mbold'>6 (Six)-digit</Text> OTP code sent to <Text className='text-gray-300 font-mbold'>userid@gmail.com</Text></Text>
-              <View className='mt-5'>
-                <Text className="text-base text-green font-msbold mb-2">Enter Code</Text>
+              <Text className="text-2xl text-center text-green font-msbold">
+                Reset your password
+              </Text>
+              <Text className="text-sm text-center font-mregular mb-8">
+                Enter{" "}
+                <Text className="text-gray-300 font-mbold">6 (Six)-digit</Text>{" "}
+                OTP code sent to{" "}
+                <Text className="text-gray-300 font-mbold">
+                  userid@gmail.com
+                </Text>
+              </Text>
+              <View className="mt-5">
+                <Text className="text-base text-green font-msbold mb-2">
+                  Enter Code
+                </Text>
                 <OtpInput
                   key={emailKey}
                   numberOfDigits={6}
@@ -52,57 +71,79 @@ const ResetPasswordOTP = () => {
                     focusedPinCodeContainerStyle: styles.activePinCodeContainer,
                     placeholderTextStyle: styles.placeholderText,
                     filledPinCodeContainerStyle: styles.filledPinCodeContainer,
-                    disabledPinCodeContainerStyle: styles.disabledPinCodeContainer,
+                    disabledPinCodeContainerStyle:
+                      styles.disabledPinCodeContainer,
                   }}
                 />
                 <View className="pt-8 flex-row items-center gap-1">
-                  {resendLoading ? ( 
-                    <FontAwesome5 name="circle-notch" size={20} color="#FF6600" className='animate-spin'/>
+                  {resendLoading ? (
+                    <FontAwesome5
+                      name="circle-notch"
+                      size={20}
+                      color="#FF6600"
+                      className="animate-spin"
+                    />
                   ) : !resend ? (
-                    <View className='flex-row items-center gap-1'>
-                      <Text className="text-base font-rregular">Resend code in</Text>
+                    <View className="flex-row items-center gap-1">
+                      <Text className="text-base font-rregular">
+                        Resend code in
+                      </Text>
                       <CountDown
                         initialSeconds={300}
                         onFinish={() => setResend(true)}
                       />
                     </View>
-                    
-                  ) : ""}
-                  {(resend && !resendLoading) &&
+                  ) : (
+                    ""
+                  )}
+                  {resend && !resendLoading && (
                     <TouchableOpacity onPress={resendOtp}>
-                      <Text className='text-base text-green font-rbold'>Resend Code</Text>
+                      <Text className="text-base text-green font-rbold">
+                        Resend Code
+                      </Text>
                     </TouchableOpacity>
-                  }
+                  )}
                 </View>
               </View>
             </View>
-            <View className='w-full justify-center mt-3' style={{ paddingBottom: bottom + 20 }}>
-              <CustomButton title="Confirm" handlePress={submit} containerStyles="w-full" isLoading={isSubmitting} textStyles='text-white'/>
+            <View
+              className="w-full justify-center mt-3"
+              style={{ paddingBottom: bottom + 20 }}
+            >
+              <CustomButton
+                title="Confirm"
+                handlePress={submit}
+                containerStyles="w-full"
+                isLoading={isSubmitting}
+                textStyles="text-white"
+              />
               <View className="mt-6 w-full flex-row gap-1 flex-wrap items-center justify-center">
-                <Text className="text-sm text-center font-msbold">Was this request a mistake?</Text>
+                <Text className="text-sm text-center font-msbold">
+                  Was this request a mistake?
+                </Text>
                 <TouchableOpacity onPress={() => router.push("/(auth)/Login")}>
                   <Text className="text-green font-msbold">Back to Login</Text>
-                </TouchableOpacity >
+                </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
-      <StatusBar style='light'/>
+      <StatusBar style="light" />
     </View>
-  )
-}
+  );
+};
 
-export default ResetPasswordOTP
+export default ResetPasswordOTP;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    gap: 10
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: 10,
   },
   pinCodeContainer: {
     backgroundColor: "#F3F3F3",
@@ -113,30 +154,28 @@ const styles = StyleSheet.create({
     height: 40,
     color: "#000",
     fontSize: 16,
-    textAlign: "center"
+    textAlign: "center",
   },
   pinCodeText: {
-    color: '#111625',
+    color: "#111625",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   focusStick: {
-    backgroundColor: '#FFAE4D',
+    backgroundColor: "#FFAE4D",
   },
   activePinCodeContainer: {
-    borderColor: '#FFAE4D',
+    borderColor: "#FFAE4D",
     borderWidth: 1,
   },
   placeholderText: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
   filledPinCodeContainer: {
-    backgroundColor: '#ffffff',
-    borderColor: '#FFAE4D',
+    backgroundColor: "#ffffff",
+    borderColor: "#FFAE4D",
   },
   disabledPinCodeContainer: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
   },
 });
-
-  

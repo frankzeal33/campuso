@@ -1,23 +1,23 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 interface RefData {
-  invitees: number
-  referralCode: string
-  totalEarned: number
+  invitees: number;
+  referralCode: string;
+  totalEarned: number;
 }
 
 interface ReferralStore {
-  refData: RefData
-  setReferralInfo: (payload: RefData) => void
-  referralLoading: boolean
-  setReferralLoading: (payload: boolean) => void
+  refData: RefData;
+  setReferralInfo: (payload: RefData) => void;
+  referralLoading: boolean;
+  setReferralLoading: (payload: boolean) => void;
 }
 
 export const useReferralStore = create<ReferralStore>((set) => ({
   refData: {
     invitees: 0,
     referralCode: "",
-    totalEarned: 0
+    totalEarned: 0,
   },
 
   setReferralInfo: (payload) =>
@@ -28,7 +28,7 @@ export const useReferralStore = create<ReferralStore>((set) => ({
   referralLoading: true,
 
   setReferralLoading: (loading) => set({ referralLoading: loading }),
-}))
+}));
 
 // import { create } from 'zustand'
 

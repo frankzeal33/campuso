@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import ImageDetailCarousel from "@/components/ImageDetailCarousel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -35,7 +36,7 @@ export default function ShopDetailsScreen() {
     const contentHeight = event.contentSize.height;
     const layoutHeight = event.layoutMeasurement.height;
 
-    const isAtBottom = layoutHeight + currentOffset >= contentHeight - 10;
+    const isAtBottom = layoutHeight + currentOffset >= contentHeight - 100;
 
     if (isAtBottom) {
       showBottomButtons.value = 1;
@@ -94,7 +95,7 @@ export default function ShopDetailsScreen() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#003D33" }}>
+    <View className="flex-1 bg-green-dark">
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
@@ -111,7 +112,10 @@ export default function ShopDetailsScreen() {
         </Animated.View>
 
         {/* CONTENT */}
-        <View style={styles.content}>
+        <View
+          style={[styles.content, { marginBottom: insets.bottom + 80 }]}
+          className="bg-green-emerald"
+        >
           <Text style={styles.title}>Consulate of Liberia, Lagos</Text>
           <Text style={styles.text}>
             Provides passport services and consular assistance for Liberian
@@ -137,7 +141,7 @@ export default function ShopDetailsScreen() {
         ]}
       >
         <Pressable style={styles.iconButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={20} color="white" />
+          <Ionicons name="arrow-back" size={22} color="white" />
         </Pressable>
 
         <View style={{ flexDirection: "row", gap: 12 }}>
@@ -145,7 +149,7 @@ export default function ShopDetailsScreen() {
             <Ionicons name="heart-outline" size={20} color="white" />
           </Pressable>
           <Pressable style={styles.iconButton}>
-            <Ionicons name="share-social-outline" size={20} color="white" />
+            <Ionicons name="share-social-outline" size={22} color="white" />
           </Pressable>
         </View>
       </Animated.View>
@@ -158,13 +162,16 @@ export default function ShopDetailsScreen() {
           bottomButtonsAnimatedStyle,
         ]}
       >
-        <Pressable style={styles.bottomButton}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Register</Text>
-        </Pressable>
-
-        <Pressable style={styles.bottomButton}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Share</Text>
-        </Pressable>
+        <CustomButton
+          title="Register"
+          containerStyles="flex-1 bg-yellow"
+          textStyles="text-black"
+        />
+        <CustomButton
+          title="Share"
+          containerStyles="flex-1 bg-green-light"
+          textStyles="text-white"
+        />
       </Animated.View>
 
       <StatusBar translucent backgroundColor="transparent" style="light" />
@@ -191,19 +198,18 @@ const styles = StyleSheet.create({
     zIndex: 50,
   },
   iconButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: "rgba(0,0,0,0.3)",
     justifyContent: "center",
     alignItems: "center",
   },
   content: {
-    backgroundColor: "#064E3B",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    padding: 20,
+    borderRadius: 16,
+    padding: 14,
     minHeight: 800,
+    margin: 10,
   },
   title: {
     fontSize: 20,
@@ -221,14 +227,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     flexDirection: "row",
-    gap: 16,
-  },
-  bottomButton: {
-    flex: 1,
-    backgroundColor: "#10B981",
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
+    gap: 10,
   },
 });

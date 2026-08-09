@@ -33,5 +33,5 @@ export default {
   boxPackage,
   localMarket,
   event,
-  more
+  more,
 };

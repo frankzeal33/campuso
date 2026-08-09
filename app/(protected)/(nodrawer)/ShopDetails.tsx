@@ -1,7 +1,5 @@
-import ShopDetailsScreen from '@/screens/marketplace.tsx/ShopDetailsScreen'
+import ShopDetailsScreen from "@/screens/marketplace/ShopDetailsScreen";
 
 export default function ShopDetails() {
-  return (
-    <ShopDetailsScreen/>
-  )
+  return <ShopDetailsScreen />;
 }

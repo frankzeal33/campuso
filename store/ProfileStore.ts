@@ -1,14 +1,14 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface UserProfile {
   phoneNumber: string;
-  countryOfResidence:  string;
-  email:  string;
-  fullName:  string;
-  profilePicture:  string;
+  countryOfResidence: string;
+  email: string;
+  fullName: string;
+  profilePicture: string;
   userName: string;
   kycVerified: boolean;
-  gender:  string;
+  gender: string;
   isProfileCreated: boolean;
   dateOfBirth: string;
   isEmailVerified: boolean;
@@ -33,7 +33,7 @@ const defaultUserProfile: UserProfile = {
   gender: "",
   isProfileCreated: false,
   dateOfBirth: "",
-  isEmailVerified: false
+  isEmailVerified: false,
 };
 
 export const useProfileStore = create<ProfileStore>((set) => ({

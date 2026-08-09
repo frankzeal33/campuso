@@ -5,9 +5,8 @@ import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
-
   const insets = useSafeAreaInsets();
-  const { theme } = useThemeStore()
+  const { theme } = useThemeStore();
 
   return (
     <Tabs
@@ -39,16 +38,18 @@ export default function TabLayout() {
               <Ionicons
                 name={focused ? "people-sharp" : "people-outline"}
                 size={size}
-                color={color} />
+                color={color}
+              />
             );
           }
 
           if (route.name === "Find") {
             return (
-              <MaterialCommunityIcons 
+              <MaterialCommunityIcons
                 name={focused ? "tag-search" : "tag-search-outline"}
                 size={size}
-                color={color} />
+                color={color}
+              />
             );
           }
 
@@ -69,8 +70,6 @@ export default function TabLayout() {
         tabBarShowLabel: true,
         tabBarStyle: {
           backgroundColor: "#fff",
-          borderTopColor: "#DDDDDD",
-          borderTopWidth: 1,
           paddingTop: 8,
           height: 60 + insets.bottom,
           paddingBottom: insets.bottom,

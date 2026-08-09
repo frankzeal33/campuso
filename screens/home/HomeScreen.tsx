@@ -20,14 +20,39 @@ import {
 import Carousel from "react-native-reanimated-carousel";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const sliderImages = [images.card1, images.card2, images.card1, images.card3];
+const sliderBanners = [
+  {
+    image: images.card1,
+    title: "Everything You Need,",
+    highlight: "Closer Than You Think",
+    description: "Trusted shops and everyday essentials around you.",
+    action: "Shop Now",
+    route: "/(protected)/(drawer)/(tabs)/MarketPlace",
+  },
+  {
+    image: images.card2,
+    title: "Find Your Space,",
+    highlight: "Live With Ease",
+    description: "Verified housing and trusted campus services.",
+    action: "Explore Now",
+    route: "/(protected)/(drawer)/(tabs)/Find",
+  },
+  {
+    image: images.card3,
+    title: "Your Campus,",
+    highlight: "Your Best Moments",
+    description: "Discover events and never miss what’s happening.",
+    action: "View Events",
+    route: "/(protected)/(nodrawer)/Events",
+  },
+];
 
 const CarouselComponent = memo(({ width }: { width: number }) => {
   return (
     <Carousel
       autoPlayInterval={5000}
-      data={sliderImages}
-      height={120}
+      data={sliderBanners}
+      height={140}
       autoPlay
       loop
       pagingEnabled
@@ -45,26 +70,55 @@ const CarouselComponent = memo(({ width }: { width: number }) => {
             width: "100%",
             height: "100%",
             alignSelf: "center",
-            borderRadius: 8,
+            borderRadius: 14,
             overflow: "hidden",
-            backgroundColor: "#1F1F1F",
+            backgroundColor: "#ccc",
           }}
-          //   onPress={() => router.push("/(protected)/(routes)/AllTickets")}
+          onPress={() => router.push(item.route as any)}
         >
           <Image
-            source={item}
+            source={item.image}
             style={{
+              position: "absolute",
               width: "100%",
               height: "100%",
               resizeMode: "cover",
               borderRadius: 14,
             }}
           />
+          <View className="h-full w-[47%] justify-center px-4 py-2">
+            <Text
+              className="font-mbold text-[13px] leading-[15px] text-white"
+              numberOfLines={1}
+            >
+              {item.title}
+            </Text>
+            <Text
+              className="font-mbold text-[13px] leading-[15px] text-yellow"
+              numberOfLines={1}
+            >
+              {item.highlight}
+            </Text>
+            <Text
+              className="mt-1.5 font-mmedium text-[7px] leading-[10px] text-white"
+              numberOfLines={2}
+            >
+              {item.description}
+            </Text>
+            <View className="mt-2 self-start flex-row items-center gap-1 rounded-full bg-white px-3 py-1.5">
+              <Text className="font-msbold text-[8px] text-green">
+                {item.action}
+              </Text>
+              <Octicons name="chevron-right" size={10} color="#008751" />
+            </View>
+          </View>
         </Pressable>
       )}
     />
   );
 });
+
+CarouselComponent.displayName = "CarouselComponent";
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -72,8 +126,6 @@ const HomeScreen = () => {
   const greeting = getGreetingMessage();
   const screen = useWindowDimensions();
   const fullWidth = screen.width;
-  const width = fullWidth - 16; // 16px padding on left sides
-  const itemWidth = width * 0.82; // 82% of screen width for item
 
   const openDrawer = () => {
     navigation.dispatch(DrawerActions.toggleDrawer());
@@ -103,16 +155,12 @@ const HomeScreen = () => {
 
         <Pressable
           className="relative"
-          onPress={() => router.push("/(protected)/(nodrawer)/Notifications")}
+          onPress={() =>
+            router.push("/(protected)/(nodrawer)/Notifications" as any)
+          }
         >
-          <View className="absolute -top-2 -right-1 bg-red-600 rounded-full min-w-[18px] min-h-[18px] items-center justify-center px-[4px] z-50">
-            <Text
-              className="text-white text-xs font-mmedium"
-              numberOfLines={1}
-              adjustsFontSizeToFit
-            >
-              5
-            </Text>
+          <View className="absolute -right-0.5 -top-1 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 z-50">
+            <Text className="font-mmedium text-[10px] text-white">4</Text>
           </View>
           <Octicons name="bell-fill" size={24} color="#218225" />
         </Pressable>
@@ -121,7 +169,7 @@ const HomeScreen = () => {
         data={[]}
         renderItem={null}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 50 }}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}
         ListHeaderComponent={() => (
           <View className="flex-1">
             <CarouselComponent width={fullWidth} />

@@ -5,13 +5,7 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  Text,
-  View
-} from "react-native";
+import { Animated, Dimensions, FlatList, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { width, height } = Dimensions.get("window");
@@ -19,7 +13,6 @@ const { width, height } = Dimensions.get("window");
 const videoSource = videos.onboardingVideo;
 
 export default function VideoOnboarding() {
-
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const insets = useSafeAreaInsets();
@@ -66,7 +59,6 @@ export default function VideoOnboarding() {
         return nextIndex;
       });
     }, SLIDE_DURATION);
-
   };
 
   // Stop auto-scroll
@@ -123,22 +115,16 @@ export default function VideoOnboarding() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
-
         // Pause when user touches
         onTouchStart={stopAutoScroll}
-
         // Resume when released
         onTouchEnd={startAutoScroll}
-
         onMomentumScrollEnd={(event) => {
-          const index = Math.round(
-            event.nativeEvent.contentOffset.x / width
-          );
+          const index = Math.round(event.nativeEvent.contentOffset.x / width);
           setActiveIndex(index);
           progressAnim.setValue(0);
           animateProgress();
         }}
-
         renderItem={({ item }) => (
           <View
             style={{
@@ -157,8 +143,18 @@ export default function VideoOnboarding() {
             </Text>
 
             <View className="flex-row gap-4">
-              <CustomButton title="LOG IN" handlePress={() => router.push("/(auth)/Login")} containerStyles="flex-1 bg-white" textStyles='text-black'/>
-              <CustomButton title="REGISTER" handlePress={() => router.push("/(auth)/Register")} containerStyles="flex-1" textStyles='text-white'/>
+              <CustomButton
+                title="LOG IN"
+                handlePress={() => router.push("/(auth)/Login")}
+                containerStyles="flex-1 bg-white"
+                textStyles="text-black"
+              />
+              <CustomButton
+                title="REGISTER"
+                handlePress={() => router.push("/(auth)/Register")}
+                containerStyles="flex-1"
+                textStyles="text-white"
+              />
             </View>
           </View>
         )}
@@ -170,7 +166,6 @@ export default function VideoOnboarding() {
         style={{ bottom: insets.bottom + 10 }}
       >
         {data.onboardingSlide.map((_, index) => {
-          
           const widthAnim = progressAnim.interpolate({
             inputRange: [0, 1],
             outputRange: [8, 30],
