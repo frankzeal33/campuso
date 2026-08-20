@@ -14,14 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { createRef, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  Image,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import type { SwipeableMethods } from "react-native-gesture-handler/ReanimatedSwipeable";
 import { RectButton } from "react-native-gesture-handler";
@@ -135,37 +128,35 @@ export default function Chats() {
 
   const filteredConversations = useMemo(
     () =>
-      conversations.filter(
-        (conversation) => {
-          const person = getPerson(conversation.id);
-          const canShowConversation =
-            conversation.isGroup ||
-            !person ||
-            person.isSameSchool ||
-            allowCrossSchool;
-          return (
-            canShowConversation &&
-            conversation.title.toLowerCase().includes(query.toLowerCase()) &&
+      conversations.filter((conversation) => {
+        const person = getPerson(conversation.id);
+        const canShowConversation =
+          conversation.isGroup ||
+          !person ||
+          person.isSameSchool ||
+          allowCrossSchool;
+        return (
+          canShowConversation &&
+          conversation.title.toLowerCase().includes(query.toLowerCase()) &&
           (conversationFilter === "All" ||
             (conversationFilter === "Unread" && !!conversation.unread) ||
             (conversationFilter === "Read" && !conversation.unread) ||
             (conversationFilter === "Friends" && !conversation.isGroup) ||
-              (conversationFilter === "Groups" && conversation.isGroup) ||
-              (conversationFilter === "Other schools" &&
-                !conversation.isGroup &&
-                person &&
-                !person.isSameSchool))
-          );
-        },
-      ),
+            (conversationFilter === "Groups" && conversation.isGroup) ||
+            (conversationFilter === "Other schools" &&
+              !conversation.isGroup &&
+              person &&
+              !person.isSameSchool))
+        );
+      }),
     [allowCrossSchool, conversationFilter, conversations, query],
   );
   const filteredPeople = useMemo(
     () =>
       people.filter(
         (person) =>
-          (person.isSameSchool || allowCrossSchool) &&
-          person.name.toLowerCase().includes(memberQuery.toLowerCase()) ||
+          ((person.isSameSchool || allowCrossSchool) &&
+            person.name.toLowerCase().includes(memberQuery.toLowerCase())) ||
           ((person.isSameSchool || allowCrossSchool) &&
             person.course.toLowerCase().includes(memberQuery.toLowerCase())),
       ),
@@ -282,7 +273,12 @@ export default function Chats() {
             await saveConversations(
               conversations.map((item) =>
                 item.id === conversation.id
-                  ? { ...item, lastMessage: "No messages yet", time: "", unread: 0 }
+                  ? {
+                      ...item,
+                      lastMessage: "No messages yet",
+                      time: "",
+                      unread: 0,
+                    }
                   : item,
               ),
             );
@@ -460,14 +456,16 @@ export default function Chats() {
             </Pressable>
 
             <FlatList
-              data={[
-                "All",
-                "Unread",
-                "Read",
-                "Friends",
-                "Groups",
-                ...(allowCrossSchool ? (["Other schools"] as const) : []),
-              ] as const}
+              data={
+                [
+                  "All",
+                  "Unread",
+                  "Read",
+                  "Friends",
+                  "Groups",
+                  ...(allowCrossSchool ? (["Other schools"] as const) : []),
+                ] as const
+              }
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item}
@@ -528,7 +526,9 @@ export default function Chats() {
                 onPress={() => openChat(item)}
                 className="flex-row bg-white pl-4"
               >
-                <View className="justify-center py-3">{renderAvatar(item)}</View>
+                <View className="justify-center py-3">
+                  {renderAvatar(item)}
+                </View>
                 <View
                   className={`ml-3 flex-1 justify-center py-3 pr-4 ${index < filteredConversations.length - 1 ? "border-b border-gray-100" : ""}`}
                 >
@@ -622,7 +622,10 @@ export default function Chats() {
                 className="flex-row items-center py-3"
               >
                 {person.image ? (
-                  <Image source={person.image} className="size-12 rounded-full" />
+                  <Image
+                    source={person.image}
+                    className="size-12 rounded-full"
+                  />
                 ) : (
                   <View className="size-12 items-center justify-center rounded-full bg-green-drawer">
                     <Text className="font-msbold text-xs text-green">
@@ -644,7 +647,11 @@ export default function Chats() {
                   ) : null}
                 </View>
                 <View className="size-9 items-center justify-center rounded-full bg-green-lighter">
-                  <Ionicons name="chatbubble-outline" size={17} color="#008751" />
+                  <Ionicons
+                    name="chatbubble-outline"
+                    size={17}
+                    color="#008751"
+                  />
                 </View>
               </Pressable>
             )}
@@ -670,7 +677,9 @@ export default function Chats() {
           <View className="flex-1">
             <View className="mb-4 flex-row items-center justify-between">
               <View>
-                <Text className="font-mbold text-xl text-gray">Add members</Text>
+                <Text className="font-mbold text-xl text-gray">
+                  Add members
+                </Text>
                 <Text className="mt-0.5 font-mregular text-xs text-gray-300">
                   {selectedMembers.length} selected · minimum of 2
                 </Text>

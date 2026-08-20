@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, FlatList, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -29,17 +29,17 @@ export default function VideoOnboarding() {
   });
 
   // Animate progress
-  const animateProgress = () => {
+  const animateProgress = useCallback(() => {
     progressAnim.setValue(0);
     Animated.timing(progressAnim, {
       toValue: 1,
       duration: SLIDE_DURATION,
       useNativeDriver: false,
     }).start();
-  };
+  }, [progressAnim]);
 
   // Start auto-scroll
-  const startAutoScroll = () => {
+  const startAutoScroll = useCallback(() => {
     if (intervalRef.current) return; // prevent multiple intervals
 
     animateProgress();
@@ -59,21 +59,21 @@ export default function VideoOnboarding() {
         return nextIndex;
       });
     }, SLIDE_DURATION);
-  };
+  }, [animateProgress, progressAnim]);
 
   // Stop auto-scroll
-  const stopAutoScroll = () => {
+  const stopAutoScroll = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     progressAnim.stopAnimation();
-  };
+  }, [progressAnim]);
 
   useEffect(() => {
     startAutoScroll();
     return () => stopAutoScroll();
-  }, []);
+  }, [startAutoScroll, stopAutoScroll]);
 
   return (
     <View className="flex-1 bg-black">

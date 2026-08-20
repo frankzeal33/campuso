@@ -22,8 +22,6 @@ const NewResetPassword = () => {
     confirmNewPassword: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const submit = async () => {
     router.push("/(auth)/Login");
   };
@@ -72,7 +70,6 @@ const NewResetPassword = () => {
                 title="Reset Password"
                 handlePress={submit}
                 containerStyles="w-full"
-                isLoading={isSubmitting}
                 textStyles="text-white"
               />
               <View className="mt-6 flex-row gap-1 flex-wrap items-center justify-center">

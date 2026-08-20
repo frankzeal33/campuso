@@ -132,7 +132,7 @@ export default function People() {
                   ? "Find your campus circle"
                   : mode === "Other schools"
                     ? "Explore beyond your campus"
-                  : `Find ${mode.toLowerCase()}`}
+                    : `Find ${mode.toLowerCase()}`}
               </Text>
               <Text className="mt-1 font-mregular text-sm leading-5 text-white/80">
                 Connect authentically with verified students in a safe campus
@@ -179,7 +179,11 @@ export default function People() {
                     >
                       {item.name}
                     </Text>
-                    <Ionicons name="checkmark-circle" size={15} color="#008751" />
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={15}
+                      color="#008751"
+                    />
                   </View>
                   <Text className="mt-1 font-mregular text-[11px] text-gray-300">
                     {item.course}
@@ -216,7 +220,11 @@ export default function People() {
                   }
                   className="h-10 flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-green"
                 >
-                  <Ionicons name="chatbubble-outline" size={15} color="#008751" />
+                  <Ionicons
+                    name="chatbubble-outline"
+                    size={15}
+                    color="#008751"
+                  />
                   <Text className="font-msbold text-[11px] text-green">
                     Message
                   </Text>

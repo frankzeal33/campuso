@@ -16,7 +16,11 @@ export default function TrustedContacts() {
   const confirmRemove = (id: string, name: string) => {
     Alert.alert("Remove trusted contact?", `${name} will be removed.`, [
       { text: "Cancel", style: "cancel" },
-      { text: "Remove", style: "destructive", onPress: () => removeContact(id) },
+      {
+        text: "Remove",
+        style: "destructive",
+        onPress: () => removeContact(id),
+      },
     ]);
   };
 
@@ -54,7 +58,9 @@ export default function TrustedContacts() {
                 </Text>
               </View>
               <View className="ml-3 flex-1">
-                <Text className="font-msbold text-sm text-gray">{item.name}</Text>
+                <Text className="font-msbold text-sm text-gray">
+                  {item.name}
+                </Text>
                 <Text className="mt-1 font-mregular text-[10px] text-gray-300">
                   {item.relationship} · {item.phone}
                 </Text>
@@ -84,7 +90,9 @@ export default function TrustedContacts() {
                 className="h-10 flex-1 flex-row items-center justify-center gap-2 rounded-xl bg-white"
               >
                 <Ionicons name="chatbubble-outline" size={16} color="#008751" />
-                <Text className="font-msbold text-[10px] text-green">Message</Text>
+                <Text className="font-msbold text-[10px] text-green">
+                  Message
+                </Text>
               </Pressable>
               <Pressable
                 onPress={() => confirmRemove(item.id, item.name)}

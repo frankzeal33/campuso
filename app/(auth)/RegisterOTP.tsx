@@ -22,16 +22,21 @@ const RegisterOTP = () => {
 
   const [otp, setOtp] = useState("");
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resend, setResend] = useState(false);
   const [emailKey, setEmailKey] = useState(0);
 
   const submit = async () => {
-    router.push("/(protected)/(drawer)/(tabs)/Home");
+    router.push("/(protected)/(drawer)/(student-tabs)/Home");
   };
 
-  const resendOtp = async () => {};
+  const resendOtp = () => {
+    setResendLoading(true);
+    setOtp("");
+    setEmailKey((key) => key + 1);
+    setResend(false);
+    setTimeout(() => setResendLoading(false), 600);
+  };
 
   return (
     <View className="flex-1 bg-green">
@@ -114,7 +119,7 @@ const RegisterOTP = () => {
                 title="Continue"
                 handlePress={submit}
                 containerStyles="w-full"
-                isLoading={isSubmitting}
+                disableButton={otp.length !== 6}
                 textStyles="text-white"
               />
               <View className="mt-6 flex-row gap-1 items-center justify-center">

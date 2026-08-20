@@ -12,7 +12,7 @@ export default function Modals({
   addheight?: any;
   children: ReactElement;
 }) {
-  const { top, bottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
 
   return (
     <Modal

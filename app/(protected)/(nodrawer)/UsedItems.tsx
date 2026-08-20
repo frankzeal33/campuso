@@ -94,12 +94,21 @@ export default function UsedItems() {
               <Pressable
                 onPress={(event) => {
                   event.stopPropagation();
-                  router.push({ pathname: "/(protected)/(nodrawer)/EditOwnedContent", params: { type: "listing", title: item.title, detail: item.condition } } as any);
+                  router.push({
+                    pathname: "/(protected)/(nodrawer)/EditOwnedContent",
+                    params: {
+                      type: "listing",
+                      title: item.title,
+                      detail: item.condition,
+                    },
+                  } as any);
                 }}
                 className="absolute right-2 top-2 flex-row items-center rounded-full bg-white px-2.5 py-1.5"
               >
                 <Ionicons name="pencil-outline" size={11} color="#008751" />
-                <Text className="ml-1 font-msbold text-[8px] text-green">Edit</Text>
+                <Text className="ml-1 font-msbold text-[8px] text-green">
+                  Edit
+                </Text>
               </Pressable>
             ) : null}
             <View className="p-3">

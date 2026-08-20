@@ -82,7 +82,8 @@ export default function CampusPlanner() {
               <View className="mt-4 flex-row items-center rounded-2xl bg-white/10 px-3 py-2">
                 <Ionicons name="document-text-outline" size={16} color="#fff" />
                 <Text className="ml-2 font-msbold text-[10px] text-white">
-                  {pendingDeadlines} pending deadline{pendingDeadlines === 1 ? "" : "s"}
+                  {pendingDeadlines} pending deadline
+                  {pendingDeadlines === 1 ? "" : "s"}
                 </Text>
               </View>
             </View>
@@ -182,7 +183,6 @@ export default function CampusPlanner() {
           </View>
         }
       />
-
     </SafeAreaView>
   );
 }

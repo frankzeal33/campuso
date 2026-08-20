@@ -1,6 +1,7 @@
 import AuthHeader from "@/components/AuthHeader";
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
+import { useAppModeStore } from "@/store/AppModeStore";
 import { Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -17,6 +18,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Login = () => {
   const { bottom } = useSafeAreaInsets();
+  const mode = useAppModeStore((state) => state.mode);
 
   const [form, setForm] = useState({
     firstname: "",
@@ -28,10 +30,12 @@ const Login = () => {
     referral: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const submit = async () => {
-    router.push("/(protected)/(drawer)/(tabs)/Home");
+    router.replace(
+      mode === "provider"
+        ? "/(protected)/(drawer)/(provider-tabs)/Dashboard"
+        : "/(protected)/(drawer)/(student-tabs)/Home",
+    );
   };
 
   return (
@@ -82,7 +86,6 @@ const Login = () => {
                   title="Log In"
                   handlePress={submit}
                   containerStyles="w-[78%]"
-                  isLoading={isSubmitting}
                   textStyles="text-white"
                 />
                 <Entypo
@@ -94,7 +97,7 @@ const Login = () => {
               </View>
               <View className="mt-6 flex-row gap-1 flex-wrap items-center justify-center">
                 <Text className="text-sm text-center font-msbold">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </Text>
                 <TouchableOpacity
                   onPress={() => router.push("/(auth)/Register")}

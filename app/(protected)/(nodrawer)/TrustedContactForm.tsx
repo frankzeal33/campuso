@@ -11,16 +11,29 @@ import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import * as Contacts from "expo-contacts";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Alert, Linking, Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Alert,
+  Linking,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TrustedContactForm() {
-  const { mode = "add", id } = useLocalSearchParams<{ mode?: "add" | "edit"; id?: string }>();
-  const { contacts, initializeSafety, addContact, updateContact } = useSafetyStore();
+  const { mode = "add", id } = useLocalSearchParams<{
+    mode?: "add" | "edit";
+    id?: string;
+  }>();
+  const { contacts, initializeSafety, addContact, updateContact } =
+    useSafetyStore();
   const contactSheetRef = useRef<CustomBottomSheetRef>(null);
   const [loaded, setLoaded] = useState(mode !== "edit");
   const [contactQuery, setContactQuery] = useState("");
-  const [deviceContacts, setDeviceContacts] = useState<Contacts.ExistingContact[]>([]);
+  const [deviceContacts, setDeviceContacts] = useState<
+    Contacts.ExistingContact[]
+  >([]);
   const [loadingContacts, setLoadingContacts] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -72,18 +85,26 @@ export default function TrustedContactForm() {
         fields: [Contacts.Fields.PhoneNumbers],
         sort: Contacts.SortTypes.FirstName,
       });
-      setDeviceContacts(result.data.filter((contact) => contact.phoneNumbers?.length));
+      setDeviceContacts(
+        result.data.filter((contact) => contact.phoneNumbers?.length),
+      );
       setContactQuery("");
       contactSheetRef.current?.present();
     } catch {
-      Alert.alert("Unable to load contacts", "Please try again or enter the contact manually.");
+      Alert.alert(
+        "Unable to load contacts",
+        "Please try again or enter the contact manually.",
+      );
     } finally {
       setLoadingContacts(false);
     }
   };
 
   const chooseContact = (contact: Contacts.ExistingContact) => {
-    setName(contact.name || `${contact.firstName || ""} ${contact.lastName || ""}`.trim());
+    setName(
+      contact.name ||
+        `${contact.firstName || ""} ${contact.lastName || ""}`.trim(),
+    );
     setPhone(contact.phoneNumbers?.[0]?.number || "");
     contactSheetRef.current?.dismiss();
   };
@@ -107,7 +128,9 @@ export default function TrustedContactForm() {
         subtitle="Someone you can reach during an emergency"
         back
       />
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}>
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+      >
         <Pressable
           onPress={openContactPicker}
           disabled={loadingContacts}
@@ -183,7 +206,9 @@ export default function TrustedContactForm() {
         <View className="flex-1">
           <View className="mb-4 flex-row items-center">
             <View className="flex-1">
-              <Text className="font-mbold text-xl text-gray">Choose contact</Text>
+              <Text className="font-mbold text-xl text-gray">
+                Choose contact
+              </Text>
               <Text className="mt-0.5 font-mregular text-xs text-gray-300">
                 Select someone you trust
               </Text>

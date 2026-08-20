@@ -99,7 +99,10 @@ export default function SavedItems() {
               <Text className="font-msbold text-sm text-gray" numberOfLines={1}>
                 {item.title}
               </Text>
-              <Text className="mt-1 font-mregular text-[10px] text-gray-300" numberOfLines={1}>
+              <Text
+                className="mt-1 font-mregular text-[10px] text-gray-300"
+                numberOfLines={1}
+              >
                 {item.subtitle}
               </Text>
               <Text className="mt-2 self-start rounded-full bg-green-lighter px-2 py-1 font-msbold text-[8px] text-green">

@@ -7,7 +7,13 @@ import { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const filters = ["All", "Academic", "Social", "Wellbeing", "Financial"] as const;
+const filters = [
+  "All",
+  "Academic",
+  "Social",
+  "Wellbeing",
+  "Financial",
+] as const;
 
 export default function AnonymousHelp() {
   const { posts, initializeHelp, markHelpful } = useAnonymousHelpStore();
@@ -72,13 +78,19 @@ export default function AnonymousHelp() {
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item}
               style={{ marginHorizontal: -16 }}
-              contentContainerStyle={{ gap: 8, paddingHorizontal: 16, paddingBottom: 14 }}
+              contentContainerStyle={{
+                gap: 8,
+                paddingHorizontal: 16,
+                paddingBottom: 14,
+              }}
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() => setFilter(item)}
                   className={`rounded-full px-4 py-2 ${filter === item ? "bg-green" : "bg-gray-light"}`}
                 >
-                  <Text className={`font-msbold text-[10px] ${filter === item ? "text-white" : "text-gray-300"}`}>
+                  <Text
+                    className={`font-msbold text-[10px] ${filter === item ? "text-white" : "text-gray-300"}`}
+                  >
                     {item}
                   </Text>
                 </Pressable>
@@ -86,12 +98,19 @@ export default function AnonymousHelp() {
             />
 
             <Pressable
-              onPress={() => router.push("/(protected)/(nodrawer)/CampusSafety" as any)}
+              onPress={() =>
+                router.push("/(protected)/(nodrawer)/CampusSafety" as any)
+              }
               className="mb-4 flex-row items-center rounded-2xl bg-yellow-light p-3"
             >
-              <Ionicons name="shield-checkmark-outline" size={20} color="#8A5A00" />
+              <Ionicons
+                name="shield-checkmark-outline"
+                size={20}
+                color="#8A5A00"
+              />
               <Text className="ml-2 flex-1 font-mregular text-[10px] leading-4 text-gray-300">
-                In immediate danger or a crisis? Open Campus Safety for emergency help.
+                In immediate danger or a crisis? Open Campus Safety for
+                emergency help.
               </Text>
               <Ionicons name="chevron-forward" size={17} color="#8A5A00" />
             </Pressable>
@@ -114,10 +133,17 @@ export default function AnonymousHelp() {
                   {new Date(item.createdAt).toLocaleDateString()}
                 </Text>
               </View>
-              <Text className="rounded-full bg-white px-2 py-1 font-msbold text-[8px] text-green">{item.category}</Text>
+              <Text className="rounded-full bg-white px-2 py-1 font-msbold text-[8px] text-green">
+                {item.category}
+              </Text>
             </View>
-            <Text className="mt-3 font-msbold text-sm text-gray">{item.title}</Text>
-            <Text className="mt-2 font-mregular text-[11px] leading-5 text-gray-300" numberOfLines={3}>
+            <Text className="mt-3 font-msbold text-sm text-gray">
+              {item.title}
+            </Text>
+            <Text
+              className="mt-2 font-mregular text-[11px] leading-5 text-gray-300"
+              numberOfLines={3}
+            >
               {item.content}
             </Text>
             <View className="mt-3 flex-row items-center gap-4">
@@ -143,12 +169,17 @@ export default function AnonymousHelp() {
                 <Pressable
                   onPress={(event) => {
                     event.stopPropagation();
-                    router.push({ pathname: "/(protected)/(nodrawer)/AnonymousHelpForm", params: { mode: "edit", id: item.id } } as any);
+                    router.push({
+                      pathname: "/(protected)/(nodrawer)/AnonymousHelpForm",
+                      params: { mode: "edit", id: item.id },
+                    } as any);
                   }}
                   className="ml-auto flex-row items-center"
                 >
                   <Ionicons name="pencil-outline" size={12} color="#008751" />
-                  <Text className="ml-1 font-msbold text-[9px] text-green">Edit</Text>
+                  <Text className="ml-1 font-msbold text-[9px] text-green">
+                    Edit
+                  </Text>
                 </Pressable>
               ) : null}
             </View>
@@ -157,7 +188,9 @@ export default function AnonymousHelp() {
         ListEmptyComponent={
           <View className="items-center py-20">
             <Ionicons name="chatbubbles-outline" size={48} color="#C3C3C3" />
-            <Text className="mt-3 font-msbold text-gray-300">No questions found</Text>
+            <Text className="mt-3 font-msbold text-gray-300">
+              No questions found
+            </Text>
           </View>
         }
       />

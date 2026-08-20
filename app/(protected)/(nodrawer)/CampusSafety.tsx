@@ -123,7 +123,8 @@ export default function CampusSafety() {
                   Trusted contacts
                 </Text>
                 <Text className="mt-1 font-mregular text-[9px] text-gray-300">
-                  {contacts.length} contact{contacts.length === 1 ? "" : "s"} added
+                  {contacts.length} contact{contacts.length === 1 ? "" : "s"}{" "}
+                  added
                 </Text>
               </Pressable>
             </View>
@@ -149,7 +150,9 @@ export default function CampusSafety() {
             </Pressable>
 
             <View className="mb-3 flex-row items-center justify-between">
-              <Text className="font-mbold text-lg text-gray">Recent reports</Text>
+              <Text className="font-mbold text-lg text-gray">
+                Recent reports
+              </Text>
               <Text className="font-mregular text-[10px] text-gray-300">
                 Stored privately on device
               </Text>
@@ -169,14 +172,21 @@ export default function CampusSafety() {
             <Text className="mt-1 font-mregular text-[10px] text-gray-300">
               {item.location} · {new Date(item.createdAt).toLocaleDateString()}
             </Text>
-            <Text className="mt-2 font-mregular text-[11px] leading-4 text-gray-300" numberOfLines={2}>
+            <Text
+              className="mt-2 font-mregular text-[11px] leading-4 text-gray-300"
+              numberOfLines={2}
+            >
               {item.description}
             </Text>
           </View>
         )}
         ListEmptyComponent={
           <View className="items-center rounded-2xl bg-gray-light py-10">
-            <Ionicons name="shield-checkmark-outline" size={38} color="#C3C3C3" />
+            <Ionicons
+              name="shield-checkmark-outline"
+              size={38}
+              color="#C3C3C3"
+            />
             <Text className="mt-3 font-msbold text-gray-300">
               No safety reports
             </Text>

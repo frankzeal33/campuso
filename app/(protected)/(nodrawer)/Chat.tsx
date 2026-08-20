@@ -54,7 +54,8 @@ const ChatScreen = () => {
     },
     {
       role: "user",
-      content: "I’d love to hear more about it. Want to meet at the library tomorrow?",
+      content:
+        "I’d love to hear more about it. Want to meet at the library tomorrow?",
     },
     {
       role: "assistant",
@@ -65,9 +66,7 @@ const ChatScreen = () => {
   const historyKey = `chat-history-${id || title || "default"}`;
 
   const scrollToLatest = useCallback((animated = false) => {
-    requestAnimationFrame(() =>
-      listRef.current?.scrollToEnd({ animated }),
-    );
+    requestAnimationFrame(() => listRef.current?.scrollToEnd({ animated }));
   }, []);
 
   useFocusEffect(
@@ -97,9 +96,7 @@ const ChatScreen = () => {
     setMessageText("");
     await AsyncStorage.setItem(historyKey, JSON.stringify(updatedMessages));
 
-    const savedConversations = await AsyncStorage.getItem(
-      "chat-conversations",
-    );
+    const savedConversations = await AsyncStorage.getItem("chat-conversations");
     const conversations = savedConversations
       ? JSON.parse(savedConversations)
       : [];

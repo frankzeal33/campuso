@@ -17,7 +17,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const ResetPassword = () => {
   const { bottom } = useSafeAreaInsets();
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
 
   const submit = async () => {
@@ -58,7 +57,6 @@ const ResetPassword = () => {
                 title="Request OTP"
                 handlePress={submit}
                 containerStyles="w-full"
-                isLoading={isSubmitting}
                 textStyles="text-white"
               />
               <View className="mt-6 w-full flex-row gap-1 flex-wrap items-center justify-center">

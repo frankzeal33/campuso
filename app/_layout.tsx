@@ -10,7 +10,7 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [fontsLoaded, error] = useFonts({
+  const [fontsLoaded] = useFonts({
     "Montserrat-Black": require("../assets/fonts/Montserrat-Black.ttf"),
     "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
     "Montserrat-SemiBold": require("../assets/fonts/Montserrat-SemiBold.ttf"),

@@ -16,7 +16,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AnonymousHelpDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { posts, initializeHelp, addReply, markHelpful } = useAnonymousHelpStore();
+  const { posts, initializeHelp, addReply, markHelpful } =
+    useAnonymousHelpStore();
   const [reply, setReply] = useState("");
   const listRef = useRef<FlatList>(null);
   const post = posts.find((item) => item.id === id);
@@ -41,12 +42,36 @@ export default function AnonymousHelpDetails() {
     if (!content) return;
     await addReply(post.id, content);
     setReply("");
-    requestAnimationFrame(() => listRef.current?.scrollToEnd({ animated: true }));
+    requestAnimationFrame(() =>
+      listRef.current?.scrollToEnd({ animated: true }),
+    );
   };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <AppScreenHeader title="Anonymous help" subtitle={post.category} back action={post.isOwner ? <Pressable onPress={() => router.push({ pathname: "/(protected)/(nodrawer)/AnonymousHelpForm", params: { mode: "edit", id: post.id } } as any)} className="flex-row items-center rounded-full bg-green-lighter px-3 py-2"><Ionicons name="pencil-outline" size={13} color="#008751" /><Text className="ml-1 font-msbold text-[9px] text-green">Edit</Text></Pressable> : undefined} />
+      <AppScreenHeader
+        title="Anonymous help"
+        subtitle={post.category}
+        back
+        action={
+          post.isOwner ? (
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/(protected)/(nodrawer)/AnonymousHelpForm",
+                  params: { mode: "edit", id: post.id },
+                } as any)
+              }
+              className="flex-row items-center rounded-full bg-green-lighter px-3 py-2"
+            >
+              <Ionicons name="pencil-outline" size={13} color="#008751" />
+              <Text className="ml-1 font-msbold text-[9px] text-green">
+                Edit
+              </Text>
+            </Pressable>
+          ) : undefined
+        }
+      />
       <FlatList
         ref={listRef}
         data={post.replies}
@@ -66,11 +91,16 @@ export default function AnonymousHelpDetails() {
                   {new Date(post.createdAt).toLocaleDateString()}
                 </Text>
               </View>
-              <Text className="mt-4 font-mbold text-lg text-gray">{post.title}</Text>
+              <Text className="mt-4 font-mbold text-lg text-gray">
+                {post.title}
+              </Text>
               <Text className="mt-2 font-mregular text-xs leading-5 text-gray-300">
                 {post.content}
               </Text>
-              <Pressable onPress={() => markHelpful(post.id)} className="mt-4 flex-row items-center self-start rounded-full bg-green-lighter px-3 py-2">
+              <Pressable
+                onPress={() => markHelpful(post.id)}
+                className="mt-4 flex-row items-center self-start rounded-full bg-green-lighter px-3 py-2"
+              >
                 <Ionicons name="heart-outline" size={15} color="#008751" />
                 <Text className="ml-1 font-msbold text-[9px] text-green">
                   Helpful · {post.helpful}
@@ -88,7 +118,9 @@ export default function AnonymousHelpDetails() {
               <Ionicons name="person-outline" size={15} color="#8A5A00" />
             </View>
             <View className="ml-2 flex-1 rounded-2xl bg-gray-light p-3">
-              <Text className="font-msbold text-[9px] text-gray">Anonymous reply</Text>
+              <Text className="font-msbold text-[9px] text-gray">
+                Anonymous reply
+              </Text>
               <Text className="mt-1 font-mregular text-[11px] leading-5 text-gray-300">
                 {item.content}
               </Text>
@@ -102,7 +134,9 @@ export default function AnonymousHelpDetails() {
         }
       />
 
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
         <View className="flex-row items-end gap-2 border-t border-gray-100 bg-white px-3 py-2">
           <TextInput
             value={reply}

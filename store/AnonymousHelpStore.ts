@@ -53,8 +53,13 @@ const starterPosts: HelpPost[] = [
 type AnonymousHelpState = {
   posts: HelpPost[];
   initializeHelp: () => Promise<void>;
-  addPost: (post: Pick<HelpPost, "category" | "title" | "content">) => Promise<string>;
-  updatePost: (postId: string, post: Pick<HelpPost, "category" | "title" | "content">) => Promise<void>;
+  addPost: (
+    post: Pick<HelpPost, "category" | "title" | "content">,
+  ) => Promise<string>;
+  updatePost: (
+    postId: string,
+    post: Pick<HelpPost, "category" | "title" | "content">,
+  ) => Promise<void>;
   addReply: (postId: string, content: string) => Promise<void>;
   markHelpful: (postId: string) => Promise<void>;
 };

@@ -36,9 +36,27 @@ export const useReferralStore = create<ReferralStore>((set) => ({
 
   referralLoading: true,
   history: [
-    { id: "ref-1", name: "Chiamaka joined Campuso", status: "earned", points: 50, date: "Aug 8" },
-    { id: "ref-2", name: "Tobi completed verification", status: "earned", points: 50, date: "Aug 4" },
-    { id: "ref-3", name: "Amara signed up", status: "pending", points: 20, date: "Aug 2" },
+    {
+      id: "ref-1",
+      name: "Chiamaka joined Campuso",
+      status: "earned",
+      points: 50,
+      date: "Aug 8",
+    },
+    {
+      id: "ref-2",
+      name: "Tobi completed verification",
+      status: "earned",
+      points: 50,
+      date: "Aug 4",
+    },
+    {
+      id: "ref-3",
+      name: "Amara signed up",
+      status: "pending",
+      points: 20,
+      date: "Aug 2",
+    },
   ],
 
   setReferralLoading: (loading) => set({ referralLoading: loading }),

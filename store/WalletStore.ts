@@ -37,9 +37,30 @@ const useWalletStore = create<WalletStore>((set) => ({
   balanceLoading: false,
   hideWallet: null,
   transactions: [
-    { id: "wallet-1", title: "Welcome credit", note: "From Campuso", amount: 500, type: "credit", date: "Today, 9:20 AM" },
-    { id: "wallet-2", title: "Data bundle", note: "MTN · 2 GB", amount: 750, type: "debit", date: "Aug 7, 4:12 PM" },
-    { id: "wallet-3", title: "Wallet funding", note: "Bank card", amount: 2000, type: "credit", date: "Aug 5, 11:08 AM" },
+    {
+      id: "wallet-1",
+      title: "Welcome credit",
+      note: "From Campuso",
+      amount: 500,
+      type: "credit",
+      date: "Today, 9:20 AM",
+    },
+    {
+      id: "wallet-2",
+      title: "Data bundle",
+      note: "MTN · 2 GB",
+      amount: 750,
+      type: "debit",
+      date: "Aug 7, 4:12 PM",
+    },
+    {
+      id: "wallet-3",
+      title: "Wallet funding",
+      note: "Bank card",
+      amount: 2000,
+      type: "credit",
+      date: "Aug 5, 11:08 AM",
+    },
   ],
 
   setWalletInfo: (data) => set({ wallet: data }),

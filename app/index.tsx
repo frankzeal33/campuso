@@ -1,5 +1,6 @@
 import { images } from "@/constants";
 import { useAuthStore } from "@/store/AuthStore";
+import { useAppModeStore } from "@/store/AppModeStore";
 import { useProfileStore } from "@/store/ProfileStore";
 import useWalletStore from "@/store/WalletStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,6 +15,8 @@ export default function App() {
     useAuthStore((state) => state);
   const setProfile = useProfileStore((state) => state.setProfile);
   const setHideWallet = useWalletStore((state) => state.setHideWallet);
+  const mode = useAppModeStore((state) => state.mode);
+  const modeHasHydrated = useAppModeStore((state) => state.hasHydrated);
 
   useEffect(() => {
     const getData = async () => {
@@ -25,7 +28,6 @@ export default function App() {
 
         if (storedToken) {
           if (user) {
-            console.log("redux user", user);
             setProfile(user);
           }
           login(storedToken);
@@ -33,7 +35,7 @@ export default function App() {
         } else {
           logout();
         }
-      } catch (error) {
+      } catch {
         logout();
       } finally {
         setLoading(false);
@@ -41,15 +43,15 @@ export default function App() {
     };
 
     getData();
-  }, []);
+  }, [login, logout, setHideWallet, setLoading, setProfile]);
 
-  if (isLoading) {
+  if (isLoading || !modeHasHydrated) {
     return (
       <View className="flex-1 justify-center items-center bg-blue">
         <StatusBar backgroundColor="#003366" style="light" />
         <View className="items-center justify-center">
           <Image
-            source={images.agent1}
+            source={images.logo}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -61,7 +63,13 @@ export default function App() {
 
   return (
     <Redirect
-      href={isAuthenticated ? "/(protected)/(drawer)/(tabs)/Home" : "/(auth)"}
+      href={
+        isAuthenticated
+          ? mode === "provider"
+            ? "/(protected)/(drawer)/(provider-tabs)/Dashboard"
+            : "/(protected)/(drawer)/(student-tabs)/Home"
+          : "/(auth)"
+      }
     />
   );
 }

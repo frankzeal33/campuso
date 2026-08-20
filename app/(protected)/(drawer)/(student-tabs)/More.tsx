@@ -120,28 +120,34 @@ export default function More() {
         </Pressable>
         <View className="mb-5 flex-row gap-3">
           <Pressable
-            onPress={() => router.push("/(protected)/(nodrawer)/CampusWallet" as any)}
+            onPress={() =>
+              router.push("/(protected)/(nodrawer)/CampusWallet" as any)
+            }
             className="flex-1 rounded-2xl bg-yellow-light p-4"
           >
             <View className="flex-row items-start justify-between">
-            <MaterialCommunityIcons
-              name="wallet-outline"
-              size={24}
-              color="#8A5A00"
-            />
+              <MaterialCommunityIcons
+                name="wallet-outline"
+                size={24}
+                color="#8A5A00"
+              />
               <Ionicons name="arrow-forward-circle" size={22} color="#8A5A00" />
             </View>
             <Text className="mt-4 font-mregular text-[11px] text-gray-300">
               Campuso wallet
             </Text>
-            <Text className="mt-1 font-mbold text-lg">₦{walletTotal.toLocaleString()}.00</Text>
+            <Text className="mt-1 font-mbold text-lg">
+              ₦{walletTotal.toLocaleString()}.00
+            </Text>
           </Pressable>
           <Pressable
-            onPress={() => router.push("/(protected)/(nodrawer)/ReferralWallet" as any)}
+            onPress={() =>
+              router.push("/(protected)/(nodrawer)/ReferralWallet" as any)
+            }
             className="flex-1 rounded-2xl bg-green-drawer p-4"
           >
             <View className="flex-row items-start justify-between">
-            <Ionicons name="gift-outline" size={24} color="#008751" />
+              <Ionicons name="gift-outline" size={24} color="#008751" />
               <Ionicons name="arrow-forward-circle" size={22} color="#008751" />
             </View>
             <Text className="mt-4 font-mregular text-[11px] text-gray-300">

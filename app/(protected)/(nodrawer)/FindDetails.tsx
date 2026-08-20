@@ -80,21 +80,19 @@ export default function FindDetails() {
           </View>
         </View>
 
-        <Text className="mt-5 font-mbold text-2xl text-gray">
-          {item.title}
-        </Text>
+        <Text className="mt-5 font-mbold text-2xl text-gray">{item.title}</Text>
         <View className="mt-2 flex-row items-center">
           <Ionicons name="location-outline" size={16} color="#787878" />
           <Text className="ml-1 font-mregular text-xs text-gray-300">
             {item.location}
           </Text>
         </View>
-        <Text className="mt-4 font-mbold text-xl text-green">
-          {item.price}
-        </Text>
+        <Text className="mt-4 font-mbold text-xl text-green">{item.price}</Text>
 
         <View className="mt-5 rounded-2xl bg-gray-light p-4">
-          <Text className="font-msbold text-sm text-gray">About this listing</Text>
+          <Text className="font-msbold text-sm text-gray">
+            About this listing
+          </Text>
           <Text className="mt-2 font-mregular text-xs leading-5 text-gray-300">
             {item.description}
           </Text>

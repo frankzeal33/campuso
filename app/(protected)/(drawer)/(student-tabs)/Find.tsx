@@ -84,29 +84,33 @@ export default function Find() {
               renderItem={({ item, index }) => {
                 const colors = categoryColors[index % categoryColors.length];
                 return (
-                <Pressable
-                  onPress={() => openCategory(item.name)}
-                  className="w-36 rounded-2xl p-4"
-                  style={{ backgroundColor: colors.background }}
-                >
-                  <View
-                    className="size-10 items-center justify-center rounded-full"
-                    style={{ backgroundColor: colors.iconBackground }}
+                  <Pressable
+                    onPress={() => openCategory(item.name)}
+                    className="w-36 rounded-2xl p-4"
+                    style={{ backgroundColor: colors.background }}
                   >
-                    <MaterialCommunityIcons
-                      name={item.icon as any}
-                      size={21}
-                      color={colors.accent}
-                    />
-                  </View>
-                  <Text className="mt-4 font-msbold text-sm text-gray">
-                    {item.name}
-                  </Text>
-                  <Text className="mt-1 font-mregular text-[9px] text-gray-300">
-                    {listings.filter((listing) => listing.category === item.name).length}{" "}
-                    available
-                  </Text>
-                </Pressable>
+                    <View
+                      className="size-10 items-center justify-center rounded-full"
+                      style={{ backgroundColor: colors.iconBackground }}
+                    >
+                      <MaterialCommunityIcons
+                        name={item.icon as any}
+                        size={21}
+                        color={colors.accent}
+                      />
+                    </View>
+                    <Text className="mt-4 font-msbold text-sm text-gray">
+                      {item.name}
+                    </Text>
+                    <Text className="mt-1 font-mregular text-[9px] text-gray-300">
+                      {
+                        listings.filter(
+                          (listing) => listing.category === item.name,
+                        ).length
+                      }{" "}
+                      available
+                    </Text>
+                  </Pressable>
                 );
               }}
             />

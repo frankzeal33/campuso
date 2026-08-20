@@ -28,7 +28,7 @@ const sliderBanners = [
     highlight: "Closer Than You Think",
     description: "Trusted shops and everyday essentials around you.",
     action: "Shop Now",
-    route: "/(protected)/(drawer)/(tabs)/MarketPlace",
+    route: "/(protected)/(drawer)/(student-tabs)/MarketPlace",
   },
   {
     image: images.card2,
@@ -36,7 +36,7 @@ const sliderBanners = [
     highlight: "Live With Ease",
     description: "Verified housing and trusted campus services.",
     action: "Explore Now",
-    route: "/(protected)/(drawer)/(tabs)/Find",
+    route: "/(protected)/(drawer)/(student-tabs)/Find",
   },
   {
     image: images.card3,

@@ -1,19 +1,16 @@
-import { useThemeStore } from "@/store/ThemeStore";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function TabLayout() {
+export default function StudentTabLayout() {
   const insets = useSafeAreaInsets();
-  const { theme } = useThemeStore();
 
   return (
     <Tabs
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === "Home") {
+          if (route.name === "Home")
             return (
               <Ionicons
                 name={focused ? "home" : "home-outline"}
@@ -21,9 +18,7 @@ export default function TabLayout() {
                 color={color}
               />
             );
-          }
-
-          if (route.name === "MarketPlace") {
+          if (route.name === "MarketPlace")
             return (
               <Ionicons
                 name={focused ? "cart-sharp" : "cart-outline"}
@@ -31,9 +26,7 @@ export default function TabLayout() {
                 color={color}
               />
             );
-          }
-
-          if (route.name === "People") {
+          if (route.name === "People")
             return (
               <Ionicons
                 name={focused ? "people-sharp" : "people-outline"}
@@ -41,9 +34,7 @@ export default function TabLayout() {
                 color={color}
               />
             );
-          }
-
-          if (route.name === "Find") {
+          if (route.name === "Find")
             return (
               <MaterialCommunityIcons
                 name={focused ? "tag-search" : "tag-search-outline"}
@@ -51,9 +42,7 @@ export default function TabLayout() {
                 color={color}
               />
             );
-          }
-
-          if (route.name === "More") {
+          if (route.name === "More")
             return (
               <Ionicons
                 name={focused ? "grid" : "grid-outline"}
@@ -61,13 +50,10 @@ export default function TabLayout() {
                 color={color}
               />
             );
-          }
-
           return <Ionicons name="ellipse-outline" size={size} color={color} />;
         },
         tabBarActiveTintColor: "#008751",
         tabBarInactiveTintColor: "gray",
-        tabBarShowLabel: true,
         tabBarStyle: {
           backgroundColor: "#fff",
           paddingTop: 8,
@@ -84,13 +70,16 @@ export default function TabLayout() {
           minWidth: 18,
           height: 18,
           borderRadius: 9,
-          textAlign: "center"
-        }
+          textAlign: "center",
+        },
       })}
     >
       <Tabs.Screen name="Home" options={{ title: "Home" }} />
       <Tabs.Screen name="MarketPlace" options={{ title: "MarketPlace" }} />
-      <Tabs.Screen name="People" options={{ title: "People", tabBarBadge: 2 }} />
+      <Tabs.Screen
+        name="People"
+        options={{ title: "People", tabBarBadge: 2 }}
+      />
       <Tabs.Screen name="Find" options={{ title: "Find" }} />
       <Tabs.Screen name="More" options={{ title: "More" }} />
     </Tabs>

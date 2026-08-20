@@ -45,7 +45,10 @@ type PlannerState = {
   items: PlannerItem[];
   initializePlanner: () => Promise<void>;
   addPlannerItem: (item: Omit<PlannerItem, "id">) => Promise<void>;
-  updatePlannerItem: (id: string, item: Omit<PlannerItem, "id">) => Promise<void>;
+  updatePlannerItem: (
+    id: string,
+    item: Omit<PlannerItem, "id">,
+  ) => Promise<void>;
   toggleCompleted: (id: string) => Promise<void>;
   removePlannerItem: (id: string) => Promise<void>;
 };
@@ -57,7 +60,10 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
     if (saved) set({ items: JSON.parse(saved) });
   },
   addPlannerItem: async (item) => {
-    const updated = [{ ...item, id: `${item.type}-${Date.now()}` }, ...get().items];
+    const updated = [
+      { ...item, id: `${item.type}-${Date.now()}` },
+      ...get().items,
+    ];
     set({ items: updated });
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   },

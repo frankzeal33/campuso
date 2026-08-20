@@ -45,7 +45,7 @@ const suggestions = [
     title: "Meet your study match",
     description: "Find reading partners and campus friends.",
     action: "Find people",
-    route: "/(protected)/(drawer)/(tabs)/People",
+    route: "/(protected)/(drawer)/(student-tabs)/People",
   },
 ];
 

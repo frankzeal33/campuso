@@ -26,9 +26,14 @@ type SafetyState = {
   reports: SafetyReport[];
   initializeSafety: () => Promise<void>;
   addContact: (contact: Omit<TrustedContact, "id">) => Promise<void>;
-  updateContact: (id: string, contact: Omit<TrustedContact, "id">) => Promise<void>;
+  updateContact: (
+    id: string,
+    contact: Omit<TrustedContact, "id">,
+  ) => Promise<void>;
   removeContact: (id: string) => Promise<void>;
-  addReport: (report: Omit<SafetyReport, "id" | "createdAt" | "status">) => Promise<void>;
+  addReport: (
+    report: Omit<SafetyReport, "id" | "createdAt" | "status">,
+  ) => Promise<void>;
 };
 
 export const useSafetyStore = create<SafetyState>((set, get) => ({
@@ -45,7 +50,10 @@ export const useSafetyStore = create<SafetyState>((set, get) => ({
     });
   },
   addContact: async (contact) => {
-    const updated = [{ ...contact, id: `contact-${Date.now()}` }, ...get().contacts];
+    const updated = [
+      { ...contact, id: `contact-${Date.now()}` },
+      ...get().contacts,
+    ];
     set({ contacts: updated });
     await AsyncStorage.setItem(CONTACTS_KEY, JSON.stringify(updated));
   },

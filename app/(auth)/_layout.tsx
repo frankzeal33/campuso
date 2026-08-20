@@ -2,7 +2,7 @@ import { useThemeStore } from "@/store/ThemeStore";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
-const _layout = () => {
+const AuthLayout = () => {
   const { theme } = useThemeStore();
 
   return (
@@ -14,7 +14,7 @@ const _layout = () => {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="Register" />
-        <Stack.Screen name="LogIn" />
+        <Stack.Screen name="Login" />
       </Stack>
 
       <StatusBar
@@ -25,4 +25,4 @@ const _layout = () => {
   );
 };
 
-export default _layout;
+export default AuthLayout;

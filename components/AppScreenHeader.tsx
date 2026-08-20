@@ -30,7 +30,7 @@ export default function AppScreenHeader({
       )}
       <View className="flex-1">
         <Text
-          className={`font-mbold text-gray ${titleClassName ?? "text-2xl"}`}
+          className={`font-mbold text-gray ${titleClassName ?? "text-xl"}`}
         >
           {title}
         </Text>

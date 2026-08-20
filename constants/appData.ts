@@ -149,7 +149,6 @@ export const people = [
     school: "Ahmadu Bello University",
     isSameSchool: false,
   },
-
 ];
 
 export const findCategories = [

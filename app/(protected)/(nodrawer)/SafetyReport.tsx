@@ -25,13 +25,18 @@ export default function SafetyReport() {
     try {
       const permission = await Location.requestForegroundPermissionsAsync();
       if (!permission.granted) {
-        Alert.alert("Permission needed", "Enable location to attach your position.");
+        Alert.alert(
+          "Permission needed",
+          "Enable location to attach your position.",
+        );
         return;
       }
       const current = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
-      setLocation(`${current.coords.latitude.toFixed(6)}, ${current.coords.longitude.toFixed(6)}`);
+      setLocation(
+        `${current.coords.latitude.toFixed(6)}, ${current.coords.longitude.toFixed(6)}`,
+      );
     } finally {
       setLocating(false);
     }
@@ -62,14 +67,25 @@ export default function SafetyReport() {
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
       >
         <Text className="mb-2 font-msbold text-xs text-gray">Concern type</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16, paddingBottom: 18 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginHorizontal: -16 }}
+          contentContainerStyle={{
+            gap: 8,
+            paddingHorizontal: 16,
+            paddingBottom: 18,
+          }}
+        >
           {categories.map((item) => (
             <Pressable
               key={item}
               onPress={() => setCategory(item)}
               className={`rounded-full px-4 py-2 ${category === item ? "bg-green" : "bg-gray-light"}`}
             >
-              <Text className={`font-msbold text-[10px] ${category === item ? "text-white" : "text-gray-300"}`}>
+              <Text
+                className={`font-msbold text-[10px] ${category === item ? "text-white" : "text-gray-300"}`}
+              >
                 {item}
               </Text>
             </Pressable>
@@ -85,7 +101,10 @@ export default function SafetyReport() {
           inputContainerStyles="rounded-2xl border-0"
           inputStyles="text-sm"
         />
-        <Pressable onPress={useCurrentLocation} className="mt-2 flex-row items-center self-start rounded-full bg-green-lighter px-3 py-2">
+        <Pressable
+          onPress={useCurrentLocation}
+          className="mt-2 flex-row items-center self-start rounded-full bg-green-lighter px-3 py-2"
+        >
           <Ionicons name="locate-outline" size={15} color="#008751" />
           <Text className="ml-1 font-msbold text-[9px] text-green">
             {locating ? "Getting location…" : "Use current location"}
@@ -113,7 +132,9 @@ export default function SafetyReport() {
             <Ionicons name="eye-off-outline" size={20} color="#008751" />
           </View>
           <View className="ml-3 flex-1">
-            <Text className="font-msbold text-sm text-gray">Report anonymously</Text>
+            <Text className="font-msbold text-sm text-gray">
+              Report anonymously
+            </Text>
             <Text className="mt-1 font-mregular text-[9px] text-gray-300">
               Your profile information will not be attached.
             </Text>
@@ -134,7 +155,8 @@ export default function SafetyReport() {
           textStyles="text-sm text-white"
         />
         <Text className="mt-3 text-center font-mregular text-[9px] leading-4 text-gray-300">
-          For immediate danger, call 112 instead of waiting for a report response.
+          For immediate danger, call 112 instead of waiting for a report
+          response.
         </Text>
       </ScrollView>
     </SafeAreaView>

@@ -19,12 +19,8 @@ export default function PlannerForm() {
     mode?: "add" | "edit";
     id?: string;
   }>();
-  const {
-    items,
-    initializePlanner,
-    addPlannerItem,
-    updatePlannerItem,
-  } = usePlannerStore();
+  const { items, initializePlanner, addPlannerItem, updatePlannerItem } =
+    usePlannerStore();
   const [loaded, setLoaded] = useState(mode !== "edit");
   const [itemType, setItemType] = useState<PlannerItem["type"]>("class");
   const [title, setTitle] = useState("");

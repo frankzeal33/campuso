@@ -17,8 +17,12 @@ const categories: HelpPost["category"][] = [
 ];
 
 export default function AnonymousHelpForm() {
-  const { mode = "add", id } = useLocalSearchParams<{ mode?: "add" | "edit"; id?: string }>();
-  const { posts, initializeHelp, addPost, updatePost } = useAnonymousHelpStore();
+  const { mode = "add", id } = useLocalSearchParams<{
+    mode?: "add" | "edit";
+    id?: string;
+  }>();
+  const { posts, initializeHelp, addPost, updatePost } =
+    useAnonymousHelpStore();
   const [category, setCategory] = useState<HelpPost["category"]>("Academic");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -69,19 +73,31 @@ export default function AnonymousHelpForm() {
         <View className="mb-5 flex-row rounded-2xl bg-green-lighter p-4">
           <Ionicons name="eye-off-outline" size={21} color="#008751" />
           <Text className="ml-2 flex-1 font-mregular text-[10px] leading-4 text-gray-300">
-            No name, email, course, or profile photo is displayed with your question.
+            No name, email, course, or profile photo is displayed with your
+            question.
           </Text>
         </View>
 
         <Text className="mb-2 font-msbold text-xs text-gray">Topic</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16, paddingBottom: 18 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginHorizontal: -16 }}
+          contentContainerStyle={{
+            gap: 8,
+            paddingHorizontal: 16,
+            paddingBottom: 18,
+          }}
+        >
           {categories.map((item) => (
             <Pressable
               key={item}
               onPress={() => setCategory(item)}
               className={`rounded-full px-4 py-2 ${category === item ? "bg-green" : "bg-gray-light"}`}
             >
-              <Text className={`font-msbold text-[10px] ${category === item ? "text-white" : "text-gray-300"}`}>
+              <Text
+                className={`font-msbold text-[10px] ${category === item ? "text-white" : "text-gray-300"}`}
+              >
                 {item}
               </Text>
             </Pressable>
